@@ -1,0 +1,13 @@
+{
+  "name": "mvp",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "lib/mvp.js",
+  "scripts": {
+    "test": ""
+  },
+  "files": [
+    "lib",
+    "bin"
+  ]
+}
