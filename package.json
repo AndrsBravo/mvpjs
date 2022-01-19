@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "type": "module",
   "main": "lib/mvp.js",
+  "bin": {
+    "mvp": "bin/cli.js"
+  },
   "scripts": {
     "test": ""
   },
