@@ -1,6 +1,5 @@
 import arg from "arg";
 export default function (args) {
-
   let options = parseArgumentsIntoOptions(args);
   console.log(options);
 }
@@ -8,21 +7,45 @@ export default function (args) {
 function parseArgumentsIntoOptions(rawArgs) {
   const args = arg(
     {
-      "--git": Boolean,
-      "--yes": Boolean,
-      "--install": Boolean,
-      "-g": "--git",
-      "-y": "--yes",
-      "-i": "--install",
+      "--init": Boolean,
+      "--layout": String,
+      "--entity": String,
+      "--model": String,
+      "--presenter": String,
+      "--form": String,
+      "--view": String,
+      "--template": String,
+      "--belong": String,
+      "--only": Boolean,
+      "-i": "--init",
+      "-l": "--layout",
+      "-e": "--entity",
+      "-m": "--model",
+      "-p": "--presenter",
+      "-f": "--form",
+      "-v": "--view",
+      "-t": "--template",
+      "-o": "--only",
+      "-b": "--belong",
     },
     {
       argv: rawArgs.slice(2),
     }
   );
+
   return {
-    skipPrompts: args["--yes"] || false,
-    git: args["--git"] || false,
-    template: args._[0],
-    runInstall: args["--install"] || false,
+    init: args["--init"] || false,
+    layout: args["--layout"],
+    entity: args["--entity"],
+    model: args["--model"],
+    presenter: args["--presenter"],
+    form: args["--form"],
+    view: args["--view"],
+    template: args["--template"],
+    belong: args["--belong"],
+    only: args["--only"] || false,
+    name: args._[0],
+    url: args._[1],
+    cwd: process.cwd(),
   };
 }
