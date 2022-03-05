@@ -1,12 +1,12 @@
-
+import fs from "fs";
 import chalk from "chalk";
 import Listr from "listr";
 import { promisify } from "util";
-import { copyTemplateFiles } from "../utils";
+import { copyTemplateFiles } from "../utils.js";
 
 const access = promisify(fs.access);
 
-export async function initProject(options) {
+export default async function initProject(options) {
   options.templateDirName = "start";
 
   const task = new Listr([
@@ -24,7 +24,7 @@ export async function initProject(options) {
   return true;
 }
 
-function setUp(options) {
+async function setUp(options) {
   try {
     console.log(options.templateDirectory);
     await access(options.templateDirectory, fs.constants.R_OK);

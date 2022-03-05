@@ -1,7 +1,6 @@
 import arg from "arg";
 export default function (args) {
-  let options = parseArgumentsIntoOptions(args);
-  console.log(options);
+  return parseArgumentsIntoOptions(args);
 }
 
 function parseArgumentsIntoOptions(rawArgs) {

@@ -1,12 +1,12 @@
 import Listr from "listr";
-import { setDefaults } from "../utils";
-import { callingConfigParams } from "../utils";
-import { readingTemplateContent } from "../utils";
-import { setUpFilePath } from "../utils";
-import { fileTesting } from "../utils";
-import { createDirAndFileTemplate } from "../utils";
+import { setDefaults } from "../utils.js";
+import { callingConfigParams } from "../utils.js";
+import { readingTemplateContent } from "../utils.js";
+import { setUpFilePath } from "../utils.js";
+import { fileTesting } from "../utils.js";
+import { createDirAndFileTemplate } from "../utils.js";
 
-export function creatingForm(options) {
+export default async function creatingForm(options) {
   options.value = options.form;
   options.target = "Form";
   options.templateDirName = "form/Form.js";

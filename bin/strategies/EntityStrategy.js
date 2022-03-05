@@ -1,15 +1,15 @@
 import Listr from "listr";
-import { setDefaults } from "../utils";
-import { capitalizeCaseValue } from "../utils";
-import { callingConfigParams } from "../utils";
-import { readingTemplateContent } from "../utils";
-import { setUpFilePath } from "../utils";
-import { fileTesting } from "../utils";
-import { createDirAndFileTemplate } from "../utils";
-import { updateConfigResource } from "../utils";
-import { writeMvpConfig } from "../utils";
+import { setDefaults } from "../utils.js";
+import { capitalizeCaseValue } from "../utils.js";
+import { callingConfigParams } from "../utils.js";
+import { readingTemplateContent } from "../utils.js";
+import { setUpFilePath } from "../utils.js";
+import { fileTesting } from "../utils.js";
+import { createDirAndFileTemplate } from "../utils.js";
+import { updateConfigResource } from "../utils.js";
+import { writeMvpConfig } from "../utils.js";
 
-export async function creatingEntity(options) {
+export default async function creatingEntity(options) {
   options.value = options.entity;
   options.target = "Entity";
   options.templateDirName = "entity/Entity.js";

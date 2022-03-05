@@ -1,14 +1,14 @@
 import Listr from "listr";
-import { setDefaults } from "../utils";
-import { callingConfigParams } from "../utils";
-import { readingTemplateContent } from "../utils";
-import { setUpFilePath } from "../utils";
-import { fileTesting } from "../utils";
-import { createDirAndFileTemplate } from "../utils";
-import { updateConfigResource } from "../utils";
-import { writeMvpConfig } from "../utils";
+import { setDefaults } from "../utils.js";
+import { callingConfigParams } from "../utils.js";
+import { readingTemplateContent } from "../utils.js";
+import { setUpFilePath } from "../utils.js";
+import { fileTesting } from "../utils.js";
+import { createDirAndFileTemplate } from "../utils.js";
+import { updateConfigResource } from "../utils.js";
+import { writeMvpConfig } from "../utils.js";
 
-export function creatingLayout(options) {
+export default async function creatingLayout(options) {
   options.value = options.layout;
   options.target = "Layout";
   options.templateDirName = "layout/Layout.js";

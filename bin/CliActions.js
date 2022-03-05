@@ -1,14 +1,14 @@
 import Listr from "listr";
-import initProject from "./strategies/InitStrategy";
-import creatingLayout from "./strategies/LayoutStrategy";
-import creatingEntity from "./strategies/EntityStrategy";
-import creatingModel from "./strategies/ModelStrategy";
-import creatingPresenter from "./strategies/PresenterStrategy";
-import creatingForm from "./strategies/FormStrategy";
-import creatingView from "./strategies/ViewStrategy";
-import creatingTemplate from "./strategies/TemplateStrategy";
+import initProject from "./strategies/InitStrategy.js";
+import creatingLayout from "./strategies/LayoutStrategy.js";
+import creatingEntity from "./strategies/EntityStrategy.js";
+import creatingModel from "./strategies/ModelStrategy.js";
+import creatingPresenter from "./strategies/PresenterStrategy.js";
+import creatingForm from "./strategies/FormStrategy.js";
+import creatingView from "./strategies/ViewStrategy.js";
+import creatingTemplate from "./strategies/TemplateStrategy.js";
 
-export async function callActions(options) {
+export default async function callActions(options) {
   const task = new Listr([
     {
       title: "Initialize project",
