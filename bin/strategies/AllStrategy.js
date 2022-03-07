@@ -15,8 +15,9 @@ export default async function creatingEntity(options) {
   }
 
   options.entity = toCapitalizeCase(options.entity);
-  options.belong = options.entity;
+  options.belong = options.entity.toLowerCase();
   options.presenter = options.entity + "Prensenter";
+  options.model = options.entity + "Model";
   options.view = options.entity + "View";
   options.template = options.entity + "Template";
 }
