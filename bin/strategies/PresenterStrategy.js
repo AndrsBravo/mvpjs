@@ -144,6 +144,6 @@ async function creatingPresenterOld(options) {
 
 function setUpRoutes(options) {
   options.config.routes[
-    options.name.toLowerCase() || options.presenter.toLowerCase()
+    options.name ? options.name.toLowerCase() : options.presenter.toLowerCase()
   ] = options.presenter;
 }

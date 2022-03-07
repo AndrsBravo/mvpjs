@@ -1,4 +1,5 @@
 import Listr from "listr";
+import setAll from "./strategies/AllStrategy.js";
 import initProject from "./strategies/InitStrategy.js";
 import creatingLayout from "./strategies/LayoutStrategy.js";
 import creatingEntity from "./strategies/EntityStrategy.js";
@@ -10,6 +11,11 @@ import creatingTemplate from "./strategies/TemplateStrategy.js";
 
 export default async function callActions(options) {
   const task = new Listr([
+    {
+      title: "Setting All",
+      task: () => setAll(options),
+      enabled: () => options.all,
+    },
     {
       title: "Initialize project",
       task: () => initProject(options),

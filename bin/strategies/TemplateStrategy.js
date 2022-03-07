@@ -6,8 +6,6 @@ import { setUpFilePath } from "../utils.js";
 import { setUpFilePathToBelong } from "../utils.js";
 import { fileTesting } from "../utils.js";
 import { createDirAndFileTemplate } from "../utils.js";
-import { updateConfigResource } from "../utils.js";
-import { writeMvpConfig } from "../utils.js";
 
 export default async function creatingTemplate(options) {
   options.value = options.template;
