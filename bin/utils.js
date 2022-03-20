@@ -2,7 +2,9 @@ import fs from "fs";
 import path from "path";
 import ncp from "ncp";
 import chalk from "chalk";
+import cheerio from "cheerio";
 import { promisify } from "util";
+import templateBuilder from "./scripts/templateBuilder.js";
 const copy = promisify(ncp);
 
 export function setDefaults(options) {
@@ -39,6 +41,25 @@ export async function readingTemplateContent(options) {
       options.value
     );
   } catch (ex) {}
+}
+export async function readingHtmlFileContent(options) {
+  if (!options.config.config.html) {
+    throw "The HTMLFile was not found";
+  }
+
+  const htmlFileRute = path.resolve(options.cwd, options.config.config.html);
+  const htmlFileContent = fs.readFileSync(htmlFileRute, "utf-8");
+
+  const $ = cheerio.load(htmlFileContent);
+  const htmlElemet = $(`[data-systemtemplate=${options.html}]`)[0];
+
+  if (!htmlElemet) {
+    throw `The HTMLTemplate ${options.html} was not found`;
+  }
+
+  const algo = templateBuilder(htmlElemet);
+
+  options.templateContent = options.templateContent.replace('html("")', algo);
 }
 
 export function setUpFilePath(options) {
@@ -80,7 +101,11 @@ export async function createDirAndFileTemplate(options) {
 
 export function updateConfigResource(options) {
   options.config.resources[options.value.toLowerCase()] =
-    options.file.replaceAll(options.cwd, "");
+    "/" +
+    path
+      .relative(options.cwd, options.file)
+      .split(path.sep)
+      .join(path.posix.sep);
 }
 
 export function writeMvpConfig(options) {

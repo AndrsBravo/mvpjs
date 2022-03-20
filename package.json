@@ -16,6 +16,7 @@
   "dependencies": {
     "arg": "^5.0.1",
     "chalk": "^5.0.0",
+    "cheerio": "^1.0.0-rc.10",
     "inquirer": "^8.2.0",
     "listr": "^0.14.3",
     "ncp": "^2.0.0"
