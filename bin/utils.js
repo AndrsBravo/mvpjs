@@ -51,7 +51,7 @@ export async function readingHtmlFileContent(options) {
   const htmlFileContent = fs.readFileSync(htmlFileRute, "utf-8");
 
   const $ = cheerio.load(htmlFileContent);
-  const htmlElemet = $(`[data-systemtemplate=${options.html}]`)[0];
+  const htmlElemet = $(`[data-systemplate=${options.html}]`)[0];
 
   if (!htmlElemet) {
     throw `The HTMLTemplate ${options.html} was not found`;
@@ -149,8 +149,11 @@ export async function copyTemplateFiles(options) {
 }
 
 export function setUpFilePathToBelong(options) {
-  if (options.belong && options.config.resources[options.belong]) {
-    let belong = options.config.resources[options.belong];
+  if (
+    options.belong &&
+    options.config.resources[options.belong.toLowerCase()]
+  ) {
+    let belong = options.config.resources[options.belong.toLowerCase()];
 
     belong = options.cwd + path.dirname(belong);
     options.filePath = path.resolve(belong, options.filePathName);

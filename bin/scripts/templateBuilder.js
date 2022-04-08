@@ -2,7 +2,7 @@ export default function templateBuilder(el) {
   var template = "";
 
   if (el.type == "text") {
-    template = el.data.trim();
+    template = evaluateText(el.data.trim());
 
     return template;
   }
@@ -52,6 +52,10 @@ export default function templateBuilder(el) {
   return template;
 }
 
+function evaluateText(text) {
+  return text.split("\n").join('"+"');
+}
+
 function propertiesBuilder(el) {
   var properties = "";
 
@@ -61,7 +65,7 @@ function propertiesBuilder(el) {
 
   for (var property in el.attribs) {
     let strategy = property;
-    if (property.endsWith("systemtemplate")) {
+    if (property.endsWith("systemplate")) {
       continue;
     }
 

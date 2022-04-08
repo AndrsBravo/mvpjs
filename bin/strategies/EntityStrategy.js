@@ -14,7 +14,7 @@ export default async function creatingEntity(options) {
   options.target = "Entity";
   options.templateDirName = "entity/Entity.js";
   options.templateName = "EntityName";
-  options.filePathName = options.value.toLowerCase();
+  options.filePathName =  options.value.toLowerCase();
 
   const task = new Listr([
     {

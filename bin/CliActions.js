@@ -42,9 +42,9 @@ export default async function callActions(options) {
       enabled: () => options.presenter,
     },
     {
-      title: "Creating Form " + options.form,
+      title: "Creating Page " + options.page,
       task: () => creatingForm(options),
-      enabled: () => options.form,
+      enabled: () => options.page,
     },
     {
       title: "Creating View " + options.view,
