@@ -3,6 +3,8 @@ import chalk from "chalk";
 import Listr from "listr";
 import { promisify } from "util";
 import { copyTemplateFiles } from "../utils.js";
+import { setDefaults } from "../utils.js";
+import { getTemplateDirectory } from "../utils.js";
 
 const access = promisify(fs.access);
 
@@ -20,6 +22,7 @@ export default async function initProject(options) {
     },
   ]);
 
+  await task.run();
   console.log("%s Project ready", chalk.green.bold("DONE"));
   return true;
 }

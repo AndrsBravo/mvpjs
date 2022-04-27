@@ -51,7 +51,7 @@ export async function readingHtmlFileContent(options) {
   const htmlFileContent = fs.readFileSync(htmlFileRute, "utf-8");
 
   const $ = cheerio.load(htmlFileContent);
-  const htmlElemet = $(`[data-systemplate=${options.html}]`)[0];
+  const htmlElemet = $(`[data-html=${options.html}]`)[0];
 
   if (!htmlElemet) {
     throw `The HTMLTemplate ${options.html} was not found`;

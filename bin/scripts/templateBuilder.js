@@ -1,3 +1,4 @@
+import cheerio from "cheerio";
 export default function templateBuilder(el) {
   var template = "";
 
@@ -42,7 +43,9 @@ export default function templateBuilder(el) {
   }
 
   if (el.name === "svg") {
-    template = el.outerHTML
+    const $ = cheerio.load(el);
+    template = $.html(el);
+    template = template
       .replaceAll('"', '\\"')
       .replaceAll("<", '"<')
       .replaceAll(">", '>"+');
@@ -65,7 +68,7 @@ function propertiesBuilder(el) {
 
   for (var property in el.attribs) {
     let strategy = property;
-    if (property.endsWith("systemplate")) {
+    if (property.endsWith("html")) {
       continue;
     }
 
