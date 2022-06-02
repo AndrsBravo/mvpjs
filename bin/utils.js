@@ -150,14 +150,28 @@ export async function copyTemplateFiles(options) {
 
 export function setUpFilePathToBelong(options) {
   if (
-    options.belong &&
-    options.config.resources[options.belong.toLowerCase()]
+    !options.belong ||
+    !options.config.resources[options.belong.toLowerCase()]
   ) {
-    let belong = options.config.resources[options.belong.toLowerCase()];
-
-    belong = options.cwd + path.dirname(belong);
-    options.filePath = path.resolve(belong, options.filePathName);
+    options.belong = undefined;
   }
+
+  let belong = options.config.resources[options.belong.toLowerCase()];
+
+  belong = options.cwd + path.dirname(belong);
+  options.filePath = path.resolve(belong, options.filePathName);
+}
+
+export function setEntityToaModel(options) {
+  if (!options.belong) return;
+
+  const belong = toCapitalizeCase(options.belong);
+  options.templateContent = `import ${belong}  from "../${belong}.js"; ` + options.templateContent.replaceAll(
+    "EntityName",
+    belong
+  );
+
+
 }
 
 async function mvpConfig(options) {

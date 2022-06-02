@@ -1,13 +1,16 @@
 import Listr from "listr";
-import { setDefaults } from "../utils.js";
-import { callingConfigParams } from "../utils.js";
-import { readingTemplateContent } from "../utils.js";
-import { setUpFilePath } from "../utils.js";
-import { setUpFilePathToBelong } from "../utils.js";
-import { fileTesting } from "../utils.js";
-import { createDirAndFileTemplate } from "../utils.js";
-import { updateConfigResource } from "../utils.js";
-import { writeMvpConfig } from "../utils.js";
+import {
+  setDefaults,
+  callingConfigParams,
+  readingTemplateContent,
+  setUpFilePath,
+  setUpFilePathToBelong,
+  setEntityToaModel,
+  fileTesting,
+  createDirAndFileTemplate,
+  updateConfigResource,
+  writeMvpConfig,
+} from "../utils.js";
 
 export default async function creatingModel(options) {
   options.value = options.model;
@@ -36,6 +39,12 @@ export default async function creatingModel(options) {
     {
       title: "Setting Up File Path if belong to: ",
       task: () => setUpFilePathToBelong(options),
+      enabled: () => options.belong,
+    },
+    {
+      title: "Setting Up Model if belong to: ",
+      task: () => setEntityToaModel(options),
+      enabled: () => options.belong,
     },
     {
       title: "Testing File",
@@ -58,61 +67,3 @@ export default async function creatingModel(options) {
   await task.run();
 }
 
-async function creatingModelOld(options) {
-  console.log("%s Creating Model propcess here!", chalk.blue.bold(">"));
-  options = getTemplateDirectory(options, "model/Model.js");
-  if (!options.model) {
-    console.error("%s Model Name missed", chalk.red.bold("ERROR"));
-    process.exit(1);
-  }
-
-  //const entity = toCapitalizeCase(options.entity);
-
-  const config = await mvpConfig(options);
-  const src = config.src || "src";
-  let templateContent;
-
-  try {
-    templateContent = fs.readFileSync(options.templateDirectory, "utf8");
-    templateContent = templateContent.replaceAll("ModelName", options.model);
-  } catch (ex) {}
-
-  let filePath = path.resolve(options.cwd, src, "models");
-
-  /* If want to add the model to especific place */
-  let belong;
-  if (options.belong && config.resources[options.belong]) {
-    belong = config.resources[options.belong];
-
-    belong = options.cwd + path.dirname(belong);
-    filePath = path.resolve(belong, "models");
-  }
-
-  const file = path.resolve(filePath, `${options.model}.js`);
-  fs.mkdirSync(filePath, { recursive: true }, (error) => {
-    if (error) {
-      console.error(
-        `%s Could not create ${filePath} directory`,
-        chalk.red.bold("ERROR")
-      );
-      return;
-    }
-  });
-  fs.writeFile(file, templateContent, (error) => {
-    if (error) {
-      console.error(
-        `%s Could not write Model ${options.model} content`,
-        chalk.red.bold("ERROR")
-      );
-      return;
-    }
-    console.log(`%s Model ${options.model} created`, chalk.green.bold("DONE"));
-  });
-
-  config.resources[options.model.toLowerCase()] = file.replaceAll(
-    options.cwd,
-    ""
-  );
-
-  writeMvpConfig(options, config);
-}
