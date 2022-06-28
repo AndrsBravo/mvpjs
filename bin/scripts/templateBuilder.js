@@ -9,7 +9,7 @@ export default function templateBuilder(el) {
   }
 
   if (el.type == "tag") {
-    template = `\nhtml(\"${el.name.toLowerCase()}\")`;
+    template = `\n${el.name.toLowerCase()}()`;
 
     template += propertiesBuilder(el);
 
@@ -17,7 +17,7 @@ export default function templateBuilder(el) {
       var child = templateBuilder(el.children[0]);
 
       if (child.length > 0) {
-        template += `.setHTML(\"${child}\")`;
+        template += `.html(\"${child}\")`;
       }
 
       return template;
@@ -34,11 +34,11 @@ export default function templateBuilder(el) {
     });
 
     if (result.length === 1) {
-      template += `\n.setHTML(${result})`;
+      template += `\n.html(${result})`;
     }
 
     if (result.length > 1) {
-      template += `\n.setHTML([${result}])`;
+      template += `\n.html([${result}])`;
     }
   }
 
@@ -76,6 +76,10 @@ function propertiesBuilder(el) {
       strategy = property.replace("data-", "");
     }
 
+    if (property.startsWith("data-on")) {
+      strategy = "on";
+    }
+
     let strategyFn = strategies[strategy];
 
     if (!strategyFn) {
@@ -89,19 +93,20 @@ function propertiesBuilder(el) {
 }
 
 const strategies = {
-  id: (attribs, property) => `.setId(\"${attribs[property]}\")`,
-  class: (attribs, property) => `.setClass(\"${attribs[property]}\")`,
-  type: (attribs, property) => `\n.setAttr(\"type\",\"${attribs[property]}\")`,
-  name: (attribs, property) => `\n.setAttr(\"name\",\"${attribs[property]}\")`,
+  on: (attribs, property) => `\n.on(\"${property.replace("data-on")}\",\"${attribs[property]}\")`,
+  id: (attribs, property) => `.id(\"${attribs[property]}\")`,
+  class: (attribs, property) => `.class(\"${attribs[property]}\")`,
+  type: (attribs, property) => `\n.attr(\"type\",\"${attribs[property]}\")`,
+  name: (attribs, property) => `\n.attr(\"name\",\"${attribs[property]}\")`,
   tabindex: (attribs, property) =>
-    `\n.setAttr(\"tabindex\",\"${attribs[property]}\")`,
+    `\n.attr(\"tabindex\",\"${attribs[property]}\")`,
 
-  binding: (attribs, property) => `\n.setBinding(\"${attribs[property]}\")`,
+  binding: (attribs, property) => `\n.binding(\"${attribs[property]}\")`,
   addclass: (attribs, property) =>
     `\n.setDataAddClass(\"${attribs[property]}\")`,
-  dataValue: (attribs, property) => `\n.setValue(\"${attribs[property]}\")`,
+  dataValue: (attribs, property) => `\n.value(\"${attribs[property]}\")`,
   system: (attribs, property) => `\n.setSystem(\"${attribs[property]}\")`,
-  dataText: (attribs, property) => `\n.setDataText(\"${attribs[property]}\")`,
+  dataText: (attribs, property) => `\n.text(\"${attribs[property]}\")`,
   dataId: (attribs, property) => `\n.setDataId(\"${attribs[property]}\")`,
   targetid: (attribs, property) =>
     `\n.setDataTargetId(\"${attribs[property]}\")`,
@@ -128,11 +133,11 @@ const strategies = {
     `\n.setDataTableHeaders(\"${attribs[property]}\")`,
   tablecontent: (attribs, property) =>
     `\n.setDataTableContent(\"${attribs[property]}\")`,
-  modelo: (attribs, property) => `\n.setDataModelo(\"${attribs[property]}\")`,
+  model: (attribs, property) => `\n.model(\"${attribs[property]}\")`,
   template: (attribs, property) =>
-    `\n.setDataTemplate(\"${attribs[property]}\")`,
+    `\n.template(\"${attribs[property]}\")`,
   view: (attribs, property) => `\n.setDataView(\"${attribs[property]}\")`,
-  section: (attribs, property) => `\n.setSection(\"${attribs[property]}\")`,
+  section: (attribs, property) => `\n.section(\"${attribs[property]}\")`,
   data: (attribs, property) =>
-    `\n.setAttr(\"${property}\",\"${attribs[property]}\")`,
+    `\n.attr(\"${property}\",\"${attribs[property]}\")`,
 };
