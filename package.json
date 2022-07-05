@@ -2,17 +2,27 @@
   "name": "mvp",
   "version": "0.1.0",
   "type": "module",
-  "main": "lib/mvp.js",
+  "main": "dist/mvp.es.js",
   "bin": {
     "mvp": "bin/cli.js"
   },
   "scripts": {
-    "test": ""
+    "test": "",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "buildr":"rollup -c"
   },
   "files": [
     "lib",
-    "bin"
+    "bin",
+    "dist"
   ],
+  "exports": {
+    ".": {
+      "import": "dist/mvp.es.js"
+    }
+  },
   "dependencies": {
     "arg": "^5.0.1",
     "chalk": "^5.0.0",
@@ -20,5 +30,9 @@
     "inquirer": "^8.2.0",
     "listr": "^0.14.3",
     "ncp": "^2.0.0"
+  },
+  "devDependencies": {
+    "rollup": "^2.75.7",
+    "vite": "^2.9.13"
   }
 }
