@@ -6,8 +6,6 @@ import { readingTemplateContent } from "../utils.js";
 import { setUpFilePath } from "../utils.js";
 import { fileTesting } from "../utils.js";
 import { createDirAndFileTemplate } from "../utils.js";
-import { updateConfigResource } from "../utils.js";
-import { writeMvpConfig } from "../utils.js";
 
 export default async function creatingEntity(options) {
   options.value = options.entity;
@@ -44,14 +42,6 @@ export default async function creatingEntity(options) {
     {
       title: "Creating files",
       task: () => createDirAndFileTemplate(options),
-    },
-    {
-      title: "Update config resource",
-      task: () => updateConfigResource(options),
-    },
-    {
-      title: "ReWritting config file resource",
-      task: () => writeMvpConfig(options),
     },
   ]);
 

@@ -9,11 +9,11 @@ export default class extends Template {
           "flex justify-center w-full bg-white border border-slate-200 min-h-full"
         )
         .html(
-          html()
+          div()
             .class("p-8 flex items-center justify-center text-blue-500")
             .html([
               div().class("font-extrabold text-6xl").html("MVP"),
-              h1().class("bg-blue-500 text-white").html("PAGE NOT FOUND"),
+              h1().class("bg-blue-500 text-white").html("'404' PAGE {@pageName} NOT FOUND"),
             ])
         )
     );

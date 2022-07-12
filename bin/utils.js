@@ -100,12 +100,12 @@ export async function createDirAndFileTemplate(options) {
 }
 
 export function updateConfigResource(options) {
-  options.config.resources[options.value.toLowerCase()] =
-    "/" +
+  options.config.routes.push(
+    "./" +
     path
       .relative(options.cwd, options.file)
       .split(path.sep)
-      .join(path.posix.sep);
+      .join(path.posix.sep));
 }
 
 export function writeMvpConfig(options) {
