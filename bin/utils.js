@@ -129,7 +129,7 @@ export function getTemplateDirectory(options) {
 
   options.templateDirectory = path.resolve(
     filepath,
-    "../../lib/templates",
+    "../templates",
     options.templateDirName
   );
 

@@ -2,7 +2,7 @@
   "name": "mvp",
   "version": "0.1.0",
   "type": "module",
-  "main": "dist/mvp.es.js",
+  "main": "build/lib/mvp.js",
   "bin": {
     "mvp": "bin/cli.js"
   },
@@ -11,16 +11,16 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "buildr":"rollup -c"
+    "buildr": "node bin/cli.js -r mvp -d ./lib && rollup -c"
   },
   "files": [
     "lib",
     "bin",
-    "dist"
+    "build"
   ],
   "exports": {
     ".": {
-      "import": "dist/mvp.es.js"
+      "import": "build/lib/mvp.js"
     }
   },
   "dependencies": {

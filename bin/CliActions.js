@@ -8,6 +8,8 @@ import creatingPresenter from "./strategies/PresenterStrategy.js";
 import creatingForm from "./strategies/FormStrategy.js";
 import creatingView from "./strategies/ViewStrategy.js";
 import creatingTemplate from "./strategies/TemplateStrategy.js";
+import recap from "./scripts/configRecap.js";
+import setConfig from "./scripts/setConfig.js";
 
 export default async function callActions(options) {
   const task = new Listr([
@@ -56,6 +58,17 @@ export default async function callActions(options) {
       task: () => creatingTemplate(options),
       enabled: () => options.template,
     },
+    {
+      title: "Performing Recap Of " + options.recap,
+      task: () => recap(options),
+      enabled: () => options.recap,
+    },
+    {
+      title: "Performing config ",
+      task: () => setConfig(options),
+      enabled: () => options.config,
+    },
+    
   ]);
 
   await task.run();
