@@ -1,0 +1,1 @@
+import { EndPointCollection } from "mvp";export default class extends EndPointCollection {constructor() {super("EndPointCollectionName", "EndPointCollectionName", {});}}

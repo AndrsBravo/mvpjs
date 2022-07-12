@@ -2,7 +2,7 @@ import Listr from "listr";
 import setAll from "./strategies/AllStrategy.js";
 import initProject from "./strategies/InitStrategy.js";
 import creatingLayout from "./strategies/LayoutStrategy.js";
-import creatingEntity from "./strategies/EntityStrategy.js";
+import creatingEndPointCollection from "./strategies/EndPointCollectionStrategy.js";
 import creatingModel from "./strategies/ModelStrategy.js";
 import creatingPresenter from "./strategies/PresenterStrategy.js";
 import creatingForm from "./strategies/FormStrategy.js";
@@ -29,9 +29,9 @@ export default async function callActions(options) {
       enabled: () => options.layout,
     },
     {
-      title: "Creating Entity " + options.entity,
-      task: () => creatingEntity(options),
-      enabled: () => options.entity,
+      title: "Creating EndPointCollection " + options.endpoint,
+      task: () => creatingEndPointCollection(options),
+      enabled: () => options.endpoint,
     },
     {
       title: "Creating Model " + options.model,

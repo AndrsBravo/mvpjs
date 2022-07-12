@@ -87,10 +87,12 @@ export async function createDirAndFileTemplate(options) {
     throw `%s Could not create ${options.target} directory`;
   }
 
+  console.log(options.file); 
+  console.log(options.templateContent);
   try {
     fs.writeFileSync(options.file, options.templateContent);
   } catch (error) {
-    throw `%s Could not write ${options.target} ${options.value} content`;
+    throw `%s No se puede escribir el contenido ${options.target} ${options.value} content`;
   }
 
   console.log(
@@ -162,16 +164,14 @@ export function setUpFilePathToBelong(options) {
   options.filePath = path.resolve(belong, options.filePathName);
 }
 
-export function setEntityToaModel(options) {
+export function setEndPointCollectionToaModel(options) {
   if (!options.belong) return;
 
   const belong = toCapitalizeCase(options.belong);
   options.templateContent = `import ${belong}  from "../${belong}.js"; ` + options.templateContent.replaceAll(
-    "EntityName",
+    "EndPointCollectionName",
     belong
   );
-
-
 }
 
 async function mvpConfig(options) {

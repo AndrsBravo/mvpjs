@@ -5,7 +5,7 @@ import {
   readingTemplateContent,
   setUpFilePath,
   setUpFilePathToBelong,
-  setEntityToaModel,
+  setEndPointCollectionToaModel,
   fileTesting,
   createDirAndFileTemplate,
   updateConfigResource,
@@ -43,7 +43,7 @@ export default async function creatingModel(options) {
     },
     {
       title: "Setting Up Model if belong to: ",
-      task: () => setEntityToaModel(options),
+      task: () => setEndPointCollectionToaModel(options),
       enabled: () => options.belong,
     },
     {

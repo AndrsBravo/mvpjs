@@ -14,7 +14,7 @@ export * from "./lib/builder/HtmlTemplateBuilder";
 
 
 
-export const { Entity } = await import("./lib/mvp/entity/Entity");
+export const { EndPointCollection } = await import("./lib/mvp/endpoint/EndPointCollection");
 export const {Layout} = await import( "./lib/mvp/layout/Layout");
 export const {Model} = await import( "./lib/mvp/model/Model");
 export const {View} = await import( "./lib/mvp/view/View");

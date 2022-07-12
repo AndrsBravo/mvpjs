@@ -7,12 +7,12 @@ import { setUpFilePath } from "../utils.js";
 import { fileTesting } from "../utils.js";
 import { createDirAndFileTemplate } from "../utils.js";
 
-export default async function creatingEntity(options) {
-  options.value = options.entity;
-  options.target = "Entity";
-  options.templateDirName = "entity/Entity.js";
-  options.templateName = "EntityName";
-  options.filePathName =  options.value.toLowerCase();
+export default async function creatingEndPointCollection(options) {
+  options.value = options.endpoint;
+  options.target = "EndPointCollection";
+  options.templateDirName = "endpoint/EndPointCollection.js";
+  options.templateName = "EndPointCollectionName";
+  options.filePathName = options.value.toLowerCase();
 
   const task = new Listr([
     {
@@ -44,6 +44,7 @@ export default async function creatingEntity(options) {
       task: () => createDirAndFileTemplate(options),
     },
   ]);
+  
 
   await task.run();
 }

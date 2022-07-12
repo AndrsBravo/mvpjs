@@ -1,1 +1,0 @@
-import { Entity } from "mvp";export default class extends Entity {constructor() {super("EntityName", "EntityName", {});}}
