@@ -48,6 +48,7 @@ export default async function creatingTemplate(options) {
     {
       title: "Creating files",
       task: () => createDirAndFileTemplate(options),
+      enabled: () => options.fileExists,
     },
   ]);
 

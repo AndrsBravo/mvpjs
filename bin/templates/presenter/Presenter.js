@@ -1,1 +1,0 @@
-import { Page } from "mvp";export default class extends Page {constructor() { super({name:"PresenterName",sections:{}}); } start() {}}

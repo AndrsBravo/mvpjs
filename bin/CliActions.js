@@ -4,8 +4,7 @@ import initProject from "./strategies/InitStrategy.js";
 import creatingLayout from "./strategies/LayoutStrategy.js";
 import creatingEndPointCollection from "./strategies/EndPointCollectionStrategy.js";
 import creatingModel from "./strategies/ModelStrategy.js";
-import creatingPresenter from "./strategies/PresenterStrategy.js";
-import creatingForm from "./strategies/FormStrategy.js";
+import creatingPage from "./strategies/PageStrategy.js";
 import creatingView from "./strategies/ViewStrategy.js";
 import creatingTemplate from "./strategies/TemplateStrategy.js";
 import recap from "./scripts/configRecap.js";
@@ -35,17 +34,12 @@ export default async function callActions(options) {
     },
     {
       title: "Creating Model " + options.model,
-      task: () => creatingModel(options),
+      task: () =>  creatingModel(options),
       enabled: () => options.model,
     },
     {
-      title: "Creating Presenter " + options.presenter,
-      task: () => creatingPresenter(options),
-      enabled: () => options.presenter,
-    },
-    {
       title: "Creating Page " + options.page,
-      task: () => creatingForm(options),
+      task: () => creatingPage(options),
       enabled: () => options.page,
     },
     {
@@ -64,12 +58,12 @@ export default async function callActions(options) {
       enabled: () => options.recap,
     },
     {
-      title: "Performing config ",
+      title: "Performing config",
       task: () => setConfig(options),
       enabled: () => options.config,
     },
-    
+
   ]);
 
-  await task.run();
+await task.run().catch(error=>{/*console.error(error)*/});
 }

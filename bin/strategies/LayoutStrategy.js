@@ -5,7 +5,7 @@ import { readingTemplateContent } from "../utils.js";
 import { setUpFilePath } from "../utils.js";
 import { fileTesting } from "../utils.js";
 import { createDirAndFileTemplate } from "../utils.js";
-import { updateConfigResource } from "../utils.js";
+import { updateConfigLayout } from "../utils.js";
 import { writeMvpConfig } from "../utils.js";
 
 export default async function creatingLayout(options) {
@@ -39,18 +39,17 @@ export default async function creatingLayout(options) {
     {
       title: "Creating files",
       task: () => createDirAndFileTemplate(options),
+      enabled: () => options.fileExists,
     },
     {
-      title: "Update config resource",
-      task: () => updateConfigResource(options),
-    },
-    {
-      title: "Setting Up layout on config",
-      task: () => setLayoutToConfigFile(options),
+      title: "Update layout at config",
+      task: () => updateConfigLayout(options),
+      enabled: () => options.fileExists,
     },
     {
       title: "ReWritting config file resource",
       task: () => writeMvpConfig(options),
+      enabled: () => options.fileExists,
     },
   ]);
 
@@ -59,66 +58,4 @@ export default async function creatingLayout(options) {
 
 export function setLayoutToConfigFile(options) {
   options.config.layout = options.value;
-}
-
-export function creatingLayoutOld(options) {
-  console.log("%s Creating Layout propcess here!", chalk.blue.bold(">"));
-  options = getTemplateDirectory(options, "layout/Layout.js");
-  if (!options.layout) {
-    console.error("%s Layout Name missed", chalk.red.bold("ERROR"));
-    process.exit(1);
-  }
-
-  //const layout = toCapitalizeCase(options.layout);
-
-  const config = mvpConfig(options);
-  const src = config.src || "src";
-  let templateContent;
-
-  try {
-    templateContent = fs.readFileSync(options.templateDirectory, "utf8");
-    templateContent = templateContent.replaceAll("LayoutName", options.layout);
-  } catch (ex) {}
-
-  const filePath = path.resolve(options.cwd, src, "layout");
-
-  const file = path.resolve(filePath, `${options.layout}.js`);
-  const fileExists = fs.existsSync(file);
-
-  if (fileExists) {
-    console.log("-----The Layout Exists");
-    return;
-  }
-
-  fs.mkdirSync(filePath, { recursive: true }, (error) => {
-    if (error) {
-      console.error(
-        `%s Could not create ${options.layout} directory`,
-        chalk.red.bold("ERROR")
-      );
-      return;
-    }
-  });
-  fs.writeFile(file, templateContent, (error) => {
-    if (error) {
-      console.error(
-        `%s Could not write Layout ${options.layout} content`,
-        chalk.red.bold("ERROR")
-      );
-      return;
-    }
-    console.log(
-      `%s Layout ${options.layout} created`,
-      chalk.green.bold("DONE")
-    );
-  });
-
-  config.resources[options.layout.toLowerCase()] = file.replaceAll(
-    options.cwd,
-    ""
-  );
-
-  config.resources["layout"] = options.layout;
-
-  writeMvpConfig(options, config);
 }

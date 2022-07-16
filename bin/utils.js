@@ -8,15 +8,12 @@ import templateBuilder from "./scripts/templateBuilder.js";
 const copy = promisify(ncp);
 
 export function setDefaults(options) {
-  console.log(
-    `%s Creating ${options.target} propcess here!`,
-    chalk.blue.bold(">")
-  );
+  console.log(`%s Creating ${options.target} process`, chalk.blue.bgBlue.bold(">"));
 
   getTemplateDirectory(options);
 
   if (!options.value) {
-    console.error(`%s ${options.target} Name missed`, chalk.red.bold("ERROR"));
+    console.error(`%s ${options.target} Name missed`, chalk.white.bgRed.bold("ERROR"));
     process.exit(1);
   }
 }
@@ -26,28 +23,22 @@ export function capitalizeCaseValue(options) {
 }
 
 export async function callingConfigParams(options) {
-  options.config = await mvpConfig(options);
-  options.src = options.config.src || "src";
+  options.mvpConfigContent = await mvpConfig(options);
+  options.src = options.mvpConfigContent.src || "src";
 }
 
 export async function readingTemplateContent(options) {
   try {
-    options.templateContent = fs.readFileSync(
-      options.templateDirectory,
-      "utf8"
-    );
-    options.templateContent = options.templateContent.replaceAll(
-      options.templateName,
-      options.value
-    );
-  } catch (ex) {}
+    options.templateContent = fs.readFileSync(options.templateDirectory, "utf8");
+    options.templateContent = options.templateContent.replaceAll(options.templateName, options.value);
+  } catch (ex) { }
 }
 export async function readingHtmlFileContent(options) {
-  if (!options.config.config.html) {
+  if (!options.mvpConfigContent.config.html) {
     throw "The HTMLFile was not found";
   }
 
-  const htmlFileRute = path.resolve(options.cwd, options.config.config.html);
+  const htmlFileRute = path.resolve(options.cwd, options.mvpConfigContent.config.html);
   const htmlFileContent = fs.readFileSync(htmlFileRute, "utf-8");
 
   const $ = cheerio.load(htmlFileContent);
@@ -63,21 +54,28 @@ export async function readingHtmlFileContent(options) {
 }
 
 export function setUpFilePath(options) {
-  options.filePath = path.resolve(
-    options.cwd,
-    options.src,
-    options.filePathName
-  );
+  options.filePath = path.resolve(options.cwd, options.src, options.filePathName);
+  
+
 }
 
-export function fileTesting(options) {
+export async function fileTesting(options) {
+
   options.file = path.resolve(options.filePath, `${options.value}.js`);
   const fileExists = fs.existsSync(options.file);
 
+  //const exists = await fileTesting(options);
+
   if (fileExists) {
-    console.log(`-----The ${options.target} Exists`);
-    return false;
+
+    console.log(`%s The file ${options.value} for ${options.target} allready exists`, chalk.white.bgYellow.bold("FILE EXISTS"));
+    console.log(`%s you have to remove it first`, chalk.bgYellow.white.bold("FILE EXISTS"));
+    throw new Error(`%s The file ${options.value} for ${options.target} allready exists`, chalk.bgRed.bold("FILE EXISTS"));
+
   }
+
+  options.fileExists = !fileExists;
+
 }
 
 export async function createDirAndFileTemplate(options) {
@@ -87,41 +85,59 @@ export async function createDirAndFileTemplate(options) {
     throw `%s Could not create ${options.target} directory`;
   }
 
-  console.log(options.file); 
-  console.log(options.templateContent);
   try {
     fs.writeFileSync(options.file, options.templateContent);
   } catch (error) {
     throw `%s No se puede escribir el contenido ${options.target} ${options.value} content`;
   }
-
-  console.log(
-    `%s ${options.target} ${options.value} created`,
-    chalk.green.bold("DONE")
-  );
 }
 
 export function updateConfigResource(options) {
-  options.config.routes.push(
-    "./" +
-    path
-      .relative(options.cwd, options.file)
-      .split(path.sep)
-      .join(path.posix.sep));
+
+
+  options.mvpConfigContent.routes.push("./" + path.relative(options.cwd, options.file).split(path.sep).join(path.posix.sep));
+}
+
+export function updateConfigLayout(options) {
+
+  const routePath = "./" + path.relative(options.cwd, options.file).split(path.sep).join(path.posix.sep)
+
+  const layout = `layout: () => import("${routePath}")`;
+
+  const layoutPlaceInConfigContent = options.mvpConfigContent.substring(options.mvpConfigContent.indexOf("layout"), options.mvpConfigContent.indexOf("}"));
+
+  options.mvpConfigContent = options.mvpConfigContent.replace(layoutPlaceInConfigContent, layout);
+}
+
+export function updateConfigRoute(options) {
+
+  const routePath = "./" + path.relative(options.cwd, options.file).split(path.sep).join(path.posix.sep)
+
+
+  let routeToReplaceInConfigContent = "routes: [";
+  let route = `routes:[{ ${options.name}: () => import("${routePath}") },`;
+
+
+  if (options.mvpConfigContent.indexOf(options.name) > -1) {
+
+    route = `${options.name}: () => import("${routePath}")`;
+
+    let indexOfRouteAtConfigContent = options.mvpConfigContent.indexOf(options.name);
+    let indexOfEndRouteAtConfigContent = options.mvpConfigContent.substring(indexOfRouteAtConfigContent).indexOf("}");
+
+    routeToReplaceInConfigContent = options.mvpConfigContent.substring(indexOfRouteAtConfigContent, indexOfRouteAtConfigContent + indexOfEndRouteAtConfigContent)
+
+  }
+
+  options.mvpConfigContent = options.mvpConfigContent.replace(routeToReplaceInConfigContent, route);
+
 }
 
 export function writeMvpConfig(options) {
   const configUrl = path.resolve(options.cwd, "mvp.config.js");
-  const configContent = `export default ${JSON.stringify(options.config)}`;
-
-  fs.writeFileSync(configUrl, configContent, (error) => {
-    if (error) {
-      console.error(
-        `%s Could not ReWrite Config content`,
-        chalk.red.bold("ERROR")
-      );
-      return;
-    }
+  options.config = true;
+  fs.writeFileSync(configUrl, options.mvpConfigContent, (error) => {
+    if (error) { console.error(`%s Could not ReWrite Config content`, chalk.red.bold("ERROR")); return; }
     console.log(`%s Config File ReWrited`, chalk.green.bold("DONE"));
   });
 }
@@ -129,53 +145,39 @@ export function writeMvpConfig(options) {
 export function getTemplateDirectory(options) {
   const filepath = new URL(import.meta.url).pathname.substring(1);
 
-  options.templateDirectory = path.resolve(
-    filepath,
-    "../templates",
-    options.templateDirName
-  );
+  options.templateDirectory = path.resolve(filepath, "../templates", options.templateDirName);
 
   return options;
 }
 
 export function toCapitalizeCase(text) {
-  return (
-    text.trim().charAt(0).toUpperCase() + text.trim().substr(1).toLowerCase()
-  );
+  return (text.trim().charAt(0).toUpperCase() + text.trim().substr(1).toLowerCase());
 }
 
 export async function copyTemplateFiles(options) {
-  return copy(options.templateDirectory, options.cwd, {
-    clobber: false,
-  });
+  return copy(options.templateDirectory, options.cwd, { clobber: false, });
 }
 
 export function setUpFilePathToBelong(options) {
-  if (
-    !options.belong ||
-    !options.config.resources[options.belong.toLowerCase()]
-  ) {
-    options.belong = undefined;
-  }
+  if (!options.belong) return;
 
-  let belong = options.config.resources[options.belong.toLowerCase()];
-
-  belong = options.cwd + path.dirname(belong);
-  options.filePath = path.resolve(belong, options.filePathName);
+  options.filePath = path.resolve(options.cwd, options.src, options.belong.toLowerCase(), options.filePathName);
 }
 
 export function setEndPointCollectionToaModel(options) {
   if (!options.belong) return;
 
-  const belong = toCapitalizeCase(options.belong);
-  options.templateContent = `import ${belong}  from "../${belong}.js"; ` + options.templateContent.replaceAll(
-    "EndPointCollectionName",
-    belong
-  );
+  options.templateContent =
+    `import ${options.belong}  from "../${options.belong}.js"; ` + options.templateContent.replaceAll("EndPointCollectionName", options.belong);
 }
 
 async function mvpConfig(options) {
-  const configUrl = path.resolve(options.cwd, "mvp.config.js");
+  /*const configUrl = path.resolve(options.cwd, "mvp.config.js");
   let config = await import("file:///" + configUrl);
   return config.default;
+*/
+
+  const result = fs.readFileSync(path.resolve(options.cwd, "mvp.config.js"), "utf8");
+  return result;
+
 }

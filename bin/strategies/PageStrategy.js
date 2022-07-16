@@ -6,13 +6,16 @@ import { setUpFilePath } from "../utils.js";
 import { setUpFilePathToBelong } from "../utils.js";
 import { fileTesting } from "../utils.js";
 import { createDirAndFileTemplate } from "../utils.js";
+import { updateConfigRoute } from "../utils.js";
+import { writeMvpConfig } from "../utils.js";
 
-export default async function creatingEndPointCollection(options) {
-  options.value = options.endpoint;
-  options.target = "EndPointCollection";
-  options.templateDirName = "endpoint/EndPointCollection.js";
-  options.templateName = "EndPointCollectionName";
-  options.filePathName = "";
+export default async function creatingPage(options) {
+  options.value = options.page;
+  options.target = "Page";
+  options.templateDirName = "page/Page.js";
+  options.templateName = "PageName";
+  options.filePathName = "pages";
+  options.name = !options.name ? `'${options.page.toLowerCase()}'` : `'${options.name.toLowerCase()}'`;
 
   const task = new Listr([
     {
@@ -42,9 +45,21 @@ export default async function creatingEndPointCollection(options) {
     {
       title: "Creating files",
       task: () => createDirAndFileTemplate(options),
+      enabled: () => options.fileExists,
     },
-  ]);
-
+    {
+      title: "Update config route",
+      task: () => updateConfigRoute(options),
+      enabled: () => options.fileExists,
+    },
+    {
+      title: "ReWritting config file resource",
+      task: () => writeMvpConfig(options),
+      enabled: () => options.fileExists,
+    },
+  ], { exitOnError: true });
 
   await task.run();
+
+  // console.log(`%s ${options.target} ${options.value} created`, chalk.green.bold("DONE"));
 }

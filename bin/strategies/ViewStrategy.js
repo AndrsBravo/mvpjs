@@ -44,14 +44,7 @@ export default async function creatingView(options) {
     {
       title: "Creating files",
       task: () => createDirAndFileTemplate(options),
-    },
-    {
-      title: "Update config resource",
-      task: () => updateConfigResource(options),
-    },
-    {
-      title: "ReWritting config file resource",
-      task: () => writeMvpConfig(options),
+      enabled: () => options.fileExists,
     },
   ]);
 
