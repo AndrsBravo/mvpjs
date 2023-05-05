@@ -3,7 +3,7 @@ import { toCapitalizeCase } from "../utils.js";
 
 export default async function creatingEndPointCollection(options) {
   if (!options.name) {
-    console.error("%s Name for EndPointCollection missed", chalk.bold.red("ERROR"));
+    console.error("%s Name for EndPointCollection missed", chalk.bold.red(" ERROR "));
     console.error("  Use command like:");
     console.error("   mvp <name> --all");
     process.exit(1);

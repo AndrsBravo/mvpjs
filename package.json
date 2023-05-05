@@ -2,7 +2,7 @@
   "name": "mvp",
   "version": "0.1.0",
   "type": "module",
-  "main": "build/lib/mvp.js",
+  "main": "mvp.js",
   "bin": {
     "mvp": "bin/cli.js"
   },
@@ -20,7 +20,7 @@
   ],
   "exports": {
     ".": {
-      "import": "build/lib/mvp.js"
+      "import": "mvp.js"
     }
   },
   "dependencies": {
