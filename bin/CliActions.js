@@ -9,6 +9,7 @@ import creatingView from "./strategies/ViewStrategy.js";
 import creatingTemplate from "./strategies/TemplateStrategy.js";
 import recap from "./scripts/configRecap.js";
 import setConfig from "./scripts/setConfig.js";
+import setC from "./scripts/set.js"
 
 export default async function callActions(options) {
   const task = new Listr([
@@ -34,7 +35,7 @@ export default async function callActions(options) {
     },
     {
       title: "Creating Model " + options.model,
-      task: () =>  creatingModel(options),
+      task: () => creatingModel(options),
       enabled: () => options.model,
     },
     {
@@ -62,8 +63,13 @@ export default async function callActions(options) {
       task: () => setConfig(options),
       enabled: () => options.config,
     },
+    {
+      title: "Set Config param",
+      task: async () => setC(options),
+      enabled: () => options.set,
+    },
 
   ]);
 
-await task.run().catch(error=>{/*console.error(error)*/});
+  await task.run().catch(error => { console.error(error); });
 }

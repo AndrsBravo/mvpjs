@@ -1,20 +1,20 @@
-const { defineConfig } = require("vite");
+const { defineConfig, splitVendorChunkPlugin } = require("vite");
 const path = require("path");
 
 module.exports = defineConfig({
   build: {
+    outDir: "build/lib",
+    emptyOutDir: true,
+    target: "esnext",
     lib: {
-      entry: path.resolve(__dirname, "lib/mvp.js"),
+      entry: ["./mvp.js", "./lib/application/AppImport.js"],
       name: "mvp",
-      fileName: (format) => `mvp.${format}.js`,
+      fileName: `mvp`,
       formats: ["es"],
     },
+
   },
-  resolve: {
-    alias: {
-      "/@": path.resolve(__dirname, "./lib"),
-    },
-  },
+
 });
 
 /*

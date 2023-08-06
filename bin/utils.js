@@ -2,9 +2,10 @@ import fs from "fs";
 import path from "path";
 import ncp from "ncp";
 import chalk from "chalk";
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
 import { promisify } from "util";
 import templateBuilder from "./scripts/templateBuilder.js";
+import constants from "./scripts/constants.js";
 const copy = promisify(ncp);
 
 export function setDefaults(options) {
@@ -34,12 +35,23 @@ export async function readingTemplateContent(options) {
   } catch (ex) { }
 }
 export async function readingHtmlFileContent(options) {
-  if (!options.mvpConfigObject.html) {
-    throw "The HTMLFile was not found";
+
+  if (!constants.files.json) {
+    throw "Json file was not found";
   }
 
-  const htmlFileRute = path.resolve(options.cwd, options.mvpConfigObject.html);
-  const htmlFileContent = fs.readFileSync(htmlFileRute, "utf-8");
+  const jsonPath = path.resolve(options.cwd,constants.files.json);
+
+  const mvp = fs.readFileSync(jsonPath, "utf-8");
+  const json = JSON.parse(mvp);
+ 
+  console.log(mvp);
+  console.log(json);
+
+  if (!json.html) {
+    throw "The HTMLFile was not found";
+  }
+  const htmlFileContent = fs.readFileSync(json.html, "utf-8");
 
   const $ = cheerio.load(htmlFileContent);
   const htmlElemet = $(`#${options.html}`)[0];
@@ -94,7 +106,6 @@ export async function createDirAndFileTemplate(options) {
 
 export function updateConfigResource(options) {
 
-
   options.mvpConfigContent.routes.push("./" + path.relative(options.cwd, options.file).split(path.sep).join(path.posix.sep));
 }
 
@@ -113,17 +124,19 @@ export function updateConfigRoute(options) {
 
   const routePath = "./" + path.relative(options.cwd, options.file).split(path.sep).join(path.posix.sep)
 
+  let routeToReplaceInConfigContent = "routes: {";
+  let route = `routes: { ${options.name}: () => import("${routePath}"),`;
 
-  let routeToReplaceInConfigContent = "routes: [";
-  let route = `routes: [{ ${options.name}: () => import("${routePath}") },`;
+  const routeName = `'${options.name}'`;
 
 
-  if (options.mvpConfigContent.indexOf(options.name) > -1) {
+  let indexOfRouteAtConfigContent = options.mvpConfigContent.indexOf(routeName);
+
+  if (indexOfRouteAtConfigContent > -1) {
 
     route = `${options.name}: () => import("${routePath}")`;
 
-    let indexOfRouteAtConfigContent = options.mvpConfigContent.indexOf(options.name);
-    let indexOfEndRouteAtConfigContent = options.mvpConfigContent.substring(indexOfRouteAtConfigContent).indexOf("}");
+    let indexOfEndRouteAtConfigContent = options.mvpConfigContent.substring(indexOfRouteAtConfigContent).indexOf(",");
 
     routeToReplaceInConfigContent = options.mvpConfigContent.substring(indexOfRouteAtConfigContent, indexOfRouteAtConfigContent + indexOfEndRouteAtConfigContent)
 

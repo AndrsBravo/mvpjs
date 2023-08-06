@@ -2,9 +2,7 @@ import path from "path";
 import fs from "fs";
 export default function (options) {
 
-    let mvpConfigFileContent = fs.readFileSync(path.resolve("mvp.config.js"), "utf8");
-
-    mvpConfigFileContent
+    let mvpConfigFileContent = fs.readFileSync(path.resolve("mvp.config.js"), "utf8"); 
 
     let newMvpConfigFileContent = mvpConfigFileContent;
     let result = [];

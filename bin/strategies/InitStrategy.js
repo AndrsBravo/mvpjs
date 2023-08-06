@@ -11,6 +11,7 @@ const access = promisify(fs.access);
 export default async function initProject(options) {
   options.templateDirName = "start";
 
+  console.log("Iniatializing project");
   const task = new Listr([
     {
       title: "Setting Up directory path",

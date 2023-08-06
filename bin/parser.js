@@ -8,6 +8,7 @@ function parseArgumentsIntoOptions(rawArgs) {
   try {
     args = arg(
       {
+        "--set": Boolean,
         "--all": Boolean,
         "--init": Boolean,
         "--layout": String,
@@ -36,13 +37,15 @@ function parseArgumentsIntoOptions(rawArgs) {
         "-r": "--recap",
         "-d": "--dir",
         "-c": "--config",
+        "-s": "--set",
       },
       {
         argv: rawArgs.slice(2),
       }
     );
   } catch (error) {
-    console.error(`unknown or unexpected option: ${rawArgs.slice(2)}`);
+    console.error(error);
+    //console.error(`unknown or unexpected option: ${rawArgs.slice(2)}`);
     process.exit(1);
   }
 
@@ -61,6 +64,7 @@ function parseArgumentsIntoOptions(rawArgs) {
     dir: args["--dir"],
     only: args["--only"] || false,
     config: args["--config"] || false,
+    set: args["--set"] || false,
     name: args._[0],
     url: args._[1],
     cwd: process.cwd(),

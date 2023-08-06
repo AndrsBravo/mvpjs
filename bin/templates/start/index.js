@@ -1,1 +1,1 @@
-import mvp from "mvp";
+import mvp from "mvp/lib";
