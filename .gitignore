@@ -1,7 +1,7 @@
 node_modules
 build
+coverage
 .DS_Store
 dist
 dist-ssr
-*.local
-coverage
+*.locale

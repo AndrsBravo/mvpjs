@@ -1,8 +1,8 @@
-import routeId from "../../../../../lib/core/system/router/routeId";
+import routeId from "@core/system/router/routeId";
 
 describe("Test Of Test", () => {
 
-    test('routeId Shoul not be null', () => {
+    test('routeId Should not be null', () => {
         expect(routeId).not.toBeNull();
     })
 
