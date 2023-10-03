@@ -12,13 +12,15 @@
     "buildr": "node bin/cli.js -r mvp -d ./lib && rollup -c"
   },
   "files": [
-    "lib",
     "bin",
-    "build"
+    "build",
+    "exports"
   ],
   "exports": {
     ".": "./mvp.js",
-    "./lib": "./lib.js"
+    "./app": "./lib.js",
+    "./end-point-data-source":"./exports/data-sources/EndPointDataSource.js"
+
   },
   "dependencies": {
     "arg": "^5.0.1",

@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1687913505506" clover="3.2.0">
-  <project timestamp="1687913505506" name="All files">
-    <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4" elements="21" coveredelements="21" complexity="0" loc="13" ncloc="13" packages="1" files="1" classes="1"/>
-    <file name="routeId.js" path="C:\Users\Bravo\Documents\B.IT\CreActivo\Formacion\Formacion-JS\node\mvp\lib\core\system\router\routeId.js">
-      <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4"/>
-      <line num="4" count="6" type="stmt"/>
-      <line num="6" count="6" type="stmt"/>
-      <line num="8" count="12" type="stmt"/>
-      <line num="10" count="103" type="stmt"/>
-      <line num="12" count="6" type="stmt"/>
-      <line num="14" count="6" type="cond" truecount="4" falsecount="0"/>
-      <line num="15" count="2" type="stmt"/>
-      <line num="18" count="4" type="stmt"/>
-      <line num="20" count="4" type="stmt"/>
-      <line num="22" count="4" type="stmt"/>
-      <line num="31" count="4" type="stmt"/>
-      <line num="32" count="4" type="stmt"/>
-      <line num="33" count="4" type="stmt"/>
-    </file>
+<coverage generated="1692451160712" clover="3.2.0">
+  <project timestamp="1692451160712" name="All files">
+    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
   </project>
 </coverage>
