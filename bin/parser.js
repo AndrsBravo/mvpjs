@@ -23,6 +23,7 @@ function parseArgumentsIntoOptions(rawArgs) {
         "--recap": String,
         "--dir": String,
         "--config": Boolean,
+        "--watch": Boolean,
         "-all": "--all",
         "-i": "--init",
         "-l": "--layout",
@@ -38,6 +39,7 @@ function parseArgumentsIntoOptions(rawArgs) {
         "-d": "--dir",
         "-c": "--config",
         "-s": "--set",
+        "-w":"--watch",
       },
       {
         argv: rawArgs.slice(2),
@@ -65,6 +67,7 @@ function parseArgumentsIntoOptions(rawArgs) {
     only: args["--only"] || false,
     config: args["--config"] || false,
     set: args["--set"] || false,
+    watch:args["--watch"] || false,
     name: args._[0],
     url: args._[1],
     cwd: process.cwd(),

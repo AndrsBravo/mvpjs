@@ -10,6 +10,7 @@ import creatingTemplate from "./strategies/TemplateStrategy.js";
 import recap from "./scripts/configRecap.js";
 import setConfig from "./scripts/setConfig.js";
 import setC from "./scripts/set.js"
+import watch from "./scripts/watch.js"
 
 export default async function callActions(options) {
   const task = new Listr([
@@ -67,6 +68,11 @@ export default async function callActions(options) {
       title: "Set Config param",
       task: async () => setC(options),
       enabled: () => options.set,
+    },
+    {
+      title: "Setting Watch Mode",
+      task: async () => watch(options),
+      enabled: () => options.watch,
     },
 
   ]);

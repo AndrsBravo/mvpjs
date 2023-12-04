@@ -1,4 +1,4 @@
-import formatTemplate from "@view/render/formatTemplate";
+import formatTemplate from "@/mvp/view/render/formatTemplate";
 import { describe, expect, test } from "vitest";
 
 describe("", () => {

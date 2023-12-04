@@ -1,4 +1,4 @@
-import routeId from "@core/system/router/routeId";
+import routeId from "@/core/system/router/routeId";
 import {describe,test,expect} from "vitest"
 
 describe("Test Of Test", () => {

@@ -6,7 +6,6 @@
     "mvp": "bin/cli.js"
   },
   "scripts": {
-    "test": "jest --coverage",
     "vitest": "vitest",
     "build": "vite build",
     "buildr": "node bin/cli.js -r mvp -d ./lib && rollup -c"
@@ -32,7 +31,6 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.5",
-    "jest": "^29.5.0",
     "rollup": "^3.25.1",
     "vite": "^4.3.9",
     "vitest": "^0.34.2"

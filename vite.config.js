@@ -12,21 +12,16 @@ export default defineConfig({
     emptyOutDir: true,
     target: "esnext",
     lib: {
-     /* entry: ["./mvp.js", "./lib/application/AppImport.js"],*/
-      entry: ["./mvp.js","./lib.js","./exports/data-sources/EndPointDataSource.js"],
+      /* entry: ["./mvp.js", "./lib/application/AppImport.js"],*/
+      entry: ["./mvp.js", "./lib.js", "./exports/data-sources/EndPointDataSource.js"],
       name: "mvp",
       fileName: `mvp`,
       formats: ["es"],
     },
-
   },
-
   resolve: {
     alias: [
       { find: '@', replacement: fileURLToPath(new URL("./lib", import.meta.url)) },
-      { find: '@core', replacement: fileURLToPath(new URL("./lib/core", import.meta.url)) },
-      { find: '@view', replacement: fileURLToPath(new URL("./lib/mvp/view", import.meta.url)) },
-      { find: '@page', replacement: fileURLToPath(new URL("./lib/mvp/page", import.meta.url)) }
     ]
   }
 
