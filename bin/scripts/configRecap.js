@@ -1,19 +1,19 @@
- import * as fs from "fs";
+import * as fs from "fs";
 import path from "path";
 
 function getFiles(src) {
     const files = fs.readdirSync(src);
     let result = [];
 
-    files.forEach((resouce) => {
-        if (resouce.endsWith(".html")) return;
-        if (resouce.endsWith(".css")) return;
-        if (resouce.endsWith(".js")) {
-            result.push(`${src}/${resouce}`);
+    files.forEach((resource) => {
+        if (resource.endsWith(".html")) return;
+        if (resource.endsWith(".css")) return;
+        if (resource.endsWith(".js")) {
+            result.push(`${src}/${resource}`);
             return;
         }
 
-        result = [...result, ...getFiles(`${src}/${resouce}`)];
+        result = [...result, ...getFiles(`${src}/${resource}`)];
     });
     return result;
 }

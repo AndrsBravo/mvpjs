@@ -25,7 +25,7 @@ export default async function creatingTemplate(options) {
       task: async () => callingConfigParams(options),
     },
     {
-      title: "Reading template contentent: ",
+      title: "Reading template content: ",
       task: async () => readingTemplateContent(options),
     },
     {
@@ -38,7 +38,7 @@ export default async function creatingTemplate(options) {
       task: async () => setUpFilePath(options),
     },
     {
-      title: "Setting Up File Path if belong to: "+options.belong,
+      title: "Setting Up File Path if belong to: " + options.belong,
       task: async () => setUpFilePathToBelong(options),
     },
     {

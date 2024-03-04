@@ -1,6 +1,8 @@
-import { describe, expect, test } from "vitest";
+'use strict'
+import { describe, test } from "node:test";
+import assert from "node:assert";
 describe('Testing Index.test.js', () => {
     test('should be equal', () => {
-        expect(1 + 1).toBe(2)
+        assert.strictEqual(2, 1 + 1)
     })
 })

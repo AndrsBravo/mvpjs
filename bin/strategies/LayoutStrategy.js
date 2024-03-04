@@ -25,7 +25,7 @@ export default async function creatingLayout(options) {
       task: () => callingConfigParams(options),
     },
     {
-      title: "Reading template contentent: ",
+      title: "Reading template content: ",
       task: () => readingTemplateContent(options),
     },
     {

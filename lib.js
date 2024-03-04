@@ -1,1 +1,1 @@
-export { default } from "./lib/application/Application";
+export const { application } = await import("./lib/application/Application");

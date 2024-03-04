@@ -29,7 +29,7 @@ export default async function creatingModel(options) {
       task: () => callingConfigParams(options),
     },
     {
-      title: "Reading template contentent: ",
+      title: "Reading template content: ",
       task: () => readingTemplateContent(options),
     },
     {

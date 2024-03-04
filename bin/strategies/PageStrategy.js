@@ -27,7 +27,7 @@ export default async function creatingPage(options) {
       task: () => callingConfigParams(options),
     },
     {
-      title: "Reading template contentent: ",
+      title: "Reading template content: ",
       task: () => readingTemplateContent(options),
     },
     {

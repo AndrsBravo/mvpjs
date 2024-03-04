@@ -1,123 +1,125 @@
-import routeId from "@/core/system/router/routeId";
-import {describe,test,expect} from "vitest"
+'use strict'
+import routeId from "mvp/core/system/router/routeId.js";
+import { describe, test } from "node:test"
+import assert from "node:assert"
 
 describe("Test Of Test", () => {
 
     test('routeId Should not be null', () => {
-        expect(routeId).not.toBeNull();
+        assert.notEqual(routeId, null);
     })
 
     test("Test '/' route", async () => {
 
         const url = new URL("http://localhost:5173");
-        
+
         const config = {};
 
         const result = await routeId(url, config);
 
-        expect(result.pageRoute).toBe("/")
-        expect(result.id).toBe("/_1c")
-        expect(result.pageMethod).toBe('start')
-        expect(result.pathname).toBe('/')
-        expect(result.search).toBe('')
-        expect(result.href).toBe("http://localhost:5173/")
-        expect(result.params).toStrictEqual({})
-        expect(result.values).toStrictEqual([])
+        assert.strictEqual(result.pageRoute, "/")
+        assert.strictEqual(result.id, "/_1c")
+        assert.strictEqual(result.pageMethod, 'start')
+        assert.strictEqual(result.pathname, '/')
+        assert.strictEqual(result.search, '')
+        assert.strictEqual(result.href, "http://localhost:5173/")
+        assert.deepEqual(result.params, {})
+        assert.deepEqual(result.values, [])
 
     })
 
     test("Test Route without base Path '/pacientes' route", async () => {
 
         const url = new URL("http://localhost:5173/pacientes");
-        
+
         const config = {};
 
         const result = await routeId(url, config);
 
-        expect(result.pageRoute).toBe("pacientes")
-        expect(result.id).toBe("pacientes_7qn")
-        expect(result.pageMethod).toBe('start')
-        expect(result.pathname).toBe('/pacientes')
-        expect(result.search).toBe('')
-        expect(result.href).toBe("http://localhost:5173/pacientes")
-        expect(result.params).toStrictEqual({})
-        expect(result.values).toStrictEqual([])
+        assert.strictEqual(result.pageRoute, "pacientes")
+        assert.strictEqual(result.id, "pacientes_7qn")
+        assert.strictEqual(result.pageMethod, 'start')
+        assert.strictEqual(result.pathname, '/pacientes')
+        assert.strictEqual(result.search, '')
+        assert.strictEqual(result.href, "http://localhost:5173/pacientes")
+        assert.deepEqual(result.params, {})
+        assert.deepEqual(result.values, [])
 
     })
 
     test("Test 'app/' route", async () => {
 
         const url = new URL("http://localhost:5173/app");
-        
+
         const config = { base: "/app" };
 
         const result = await routeId(url, config);
 
-        expect(result.pageRoute).toBe("/")
-        expect(result.id).toBe("/_14x")
-        expect(result.pageMethod).toBe('start')
-        expect(result.pathname).toBe('/app')
-        expect(result.search).toBe('')
-        expect(result.href).toBe("http://localhost:5173/app")
-        expect(result.params).toStrictEqual({})
-        expect(result.values).toStrictEqual([])
+        assert.strictEqual(result.pageRoute, "/")
+        assert.strictEqual(result.id, "/_14x")
+        assert.strictEqual(result.pageMethod, 'start')
+        assert.strictEqual(result.pathname, '/app')
+        assert.strictEqual(result.search, '')
+        assert.strictEqual(result.href, "http://localhost:5173/app")
+        assert.deepEqual(result.params, {})
+        assert.deepEqual(result.values, [])
 
     })
 
     test("Test 'app/pacientes' route", async () => {
 
         const url = new URL("http://localhost:5173/app/pacientes");
-        
+
         const config = { base: "/app" };
 
         const result = await routeId(url, config);
 
-        expect(result.pageRoute).toBe("pacientes")
-        expect(result.id).toBe("pacientes_et7")
-        expect(result.pageMethod).toBe('start')
-        expect(result.pathname).toBe('/app/pacientes')
-        expect(result.search).toBe('')
-        expect(result.params).toStrictEqual({})
-        expect(result.values).toStrictEqual([])
-        expect(result.href).toBe("http://localhost:5173/app/pacientes")
+        assert.strictEqual(result.pageRoute, "pacientes")
+        assert.strictEqual(result.id, "pacientes_et7")
+        assert.strictEqual(result.pageMethod, 'start')
+        assert.strictEqual(result.pathname, '/app/pacientes')
+        assert.strictEqual(result.search, '')
+        assert.deepEqual(result.params, {})
+        assert.deepEqual(result.values, [])
+        assert.strictEqual(result.href, "http://localhost:5173/app/pacientes")
 
     })
 
     test("Test 'app/pacientes/addNewPaciente' route", async () => {
 
         const url = new URL("http://localhost:5173/app/pacientes/addNewPaciente");
-        
+
         const config = { base: "/app" };
 
         const result = await routeId(url, config);
 
-        expect(result.pageRoute).toBe("pacientes")
-        expect(result.id).toBe("pacientes_1r5b")
-        expect(result.pageMethod).toBe('start')
-        expect(result.pathname).toBe('/app/pacientes/addNewPaciente')
-        expect(result.search).toBe('')
-        expect(result.params).toStrictEqual({})
-        expect(result.values).toStrictEqual(['addNewPaciente'])
-        expect(result.href).toBe("http://localhost:5173/app/pacientes/addNewPaciente")
+        assert.strictEqual(result.pageRoute, "pacientes")
+        assert.strictEqual(result.id, "pacientes_1r5b")
+        assert.strictEqual(result.pageMethod, 'start')
+        assert.strictEqual(result.pathname, '/app/pacientes/addNewPaciente')
+        assert.strictEqual(result.search, '')
+        assert.deepEqual(result.params, {})
+        assert.deepEqual(result.values, ['addNewPaciente'])
+        assert.strictEqual(result.href, "http://localhost:5173/app/pacientes/addNewPaciente")
 
     })
 
     test("Test 'app/pacientes/addNewPaciente?id=1&codigo=500' route", async () => {
 
         const url = new URL("http://localhost:5173/app/pacientes/addNewPaciente?id=1&codigo=500");
-        
+
         const config = { base: "/app" };
 
         const result = await routeId(url, config);
 
-        expect(result.pageRoute).toBe("pacientes")
-        expect(result.id).toBe("pacientes_3xka")
-        expect(result.pageMethod).toBe('start')
-        expect(result.pathname).toBe('/app/pacientes/addNewPaciente')
-        expect(result.search).toBe('?id=1&codigo=500')
-        expect(result.params).toStrictEqual({ id: '1', codigo: '500' })
-        expect(result.values).toStrictEqual(['addNewPaciente'])
-        expect(result.href).toBe("http://localhost:5173/app/pacientes/addNewPaciente?id=1&codigo=500")
+        assert.strictEqual(result.pageRoute, "pacientes")
+        assert.strictEqual(result.id, "pacientes_3xka")
+        assert.strictEqual(result.pageMethod, 'start')
+        assert.strictEqual(result.pathname, '/app/pacientes/addNewPaciente')
+        assert.strictEqual(result.search, '?id=1&codigo=500')
+        assert.deepEqual(result.params, { id: '1', codigo: '500' })
+        assert.deepEqual(result.values, ['addNewPaciente'])
+        assert.strictEqual(result.href, "http://localhost:5173/app/pacientes/addNewPaciente?id=1&codigo=500")
 
     })
 

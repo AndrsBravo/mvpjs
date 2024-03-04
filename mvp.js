@@ -1,9 +1,5 @@
 //export * from "./lib/builder/HtmlTemplateBuilder";
 
-/** @type {import("./lib/mvp/endpoint/requestInitBuilder")} */
-export const { requestInitBuilder } = await import("./lib/mvp/endpoint/requestInitBuilder");
-/** @type {import("./lib/mvp/endpoint/EndPointCollection.js").EndPointCollection} */
-export const { EndPointCollection } = await import("./lib/mvp/endpoint/EndPointCollection");
 export const { Presenter } = await import("./lib/mvp/presenters/Presenter");
 export const { Layout } = await import("./lib/mvp/layout/Layout");
 export const { Model } = await import("./lib/mvp/model/Model");

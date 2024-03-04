@@ -26,7 +26,7 @@ export default async function creatingView(options) {
       task: () => callingConfigParams(options),
     },
     {
-      title: "Reading template contentent: ",
+      title: "Reading template content: ",
       task: () => readingTemplateContent(options),
     },
     {
@@ -52,7 +52,7 @@ export default async function creatingView(options) {
 }
 
 async function creatingViewOld(options) {
-  console.log("%s Creating View propcess here!", chalk.blue.bold(">"));
+  console.log("%s Creating View process here!", chalk.blue.bold(">"));
   options = getTemplateDirectory(options, "view/View.js");
   if (!options.view) {
     console.error("%s View Name missed", chalk.red.bold("ERROR"));
@@ -69,11 +69,11 @@ async function creatingViewOld(options) {
   try {
     templateContent = fs.readFileSync(options.templateDirectory, "utf8");
     templateContent = templateContent.replaceAll("ViewName", options.view);
-  } catch (ex) {}
+  } catch (ex) { }
 
   let filePath = path.resolve(options.cwd, src, "views");
 
-  /* If want to add the view to especific place */
+  /* If want to add the view to specific place */
   let belong;
   if (options.belong && config.resources[options.belong]) {
     belong = config.resources[options.belong];

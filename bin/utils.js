@@ -41,11 +41,11 @@ export async function readingHtmlFileContent(options) {
     throw "Json file was not found";
   }
 
-  const jsonPath = path.resolve(options.cwd,constants.files.json);
+  const jsonPath = path.resolve(options.cwd, constants.files.json);
 
   const mvp = fs.readFileSync(jsonPath, "utf-8");
   const json = JSON.parse(mvp);
- 
+
   console.log(mvp);
   console.log(json);
 
@@ -55,13 +55,13 @@ export async function readingHtmlFileContent(options) {
   const htmlFileContent = fs.readFileSync(json.html, "utf-8");
 
   const $ = cheerio.load(htmlFileContent);
-  const htmlElemet = $(`#${options.html}`)[0];
+  const htmlElement = $(`#${options.html}`)[0];
 
-  if (!htmlElemet) {
+  if (!htmlElement) {
     throw `The HTMLTemplate ${options.html} was not found`;
   }
 
-  const html = templateBuilder(htmlElemet);
+  const html = templateBuilder(htmlElement);
 
   options.templateContent = options.templateContent.replace('html("")', html.template);
   options.templateContent = options.templateContent.replace('tags', [...html.tags].join(","));
@@ -81,9 +81,9 @@ export async function fileTesting(options) {
 
   if (fileExists) {
 
-    console.log(`%s The file ${options.value} for ${options.target} allready exists`, chalk.white.bgYellow.bold(" FILE EXISTS "));
+    console.log(`%s The file ${options.value} for ${options.target} already exists`, chalk.white.bgYellow.bold(" FILE EXISTS "));
     console.log(`%s you have to remove it first`, chalk.bgYellow.white.bold(" FILE EXISTS "));
-    throw new Error(`%s The file ${options.value} for ${options.target} allready exists`, chalk.bgRed.bold(" FILE EXISTS "));
+    throw new Error(`%s The file ${options.value} for ${options.target} already exists`, chalk.bgRed.bold(" FILE EXISTS "));
 
   }
 

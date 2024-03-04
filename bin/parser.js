@@ -1,13 +1,19 @@
 import arg from "arg";
+import path from "node:path"
+import { fileURLToPath } from "url";
+
 export default function (args) {
   return parseArgumentsIntoOptions(args);
 }
 
 function parseArgumentsIntoOptions(rawArgs) {
+
   let args = {};
   try {
     args = arg(
       {
+        "--dev": Boolean,
+        "--start": Boolean,
         "--set": Boolean,
         "--all": Boolean,
         "--init": Boolean,
@@ -39,7 +45,7 @@ function parseArgumentsIntoOptions(rawArgs) {
         "-d": "--dir",
         "-c": "--config",
         "-s": "--set",
-        "-w":"--watch",
+        "-w": "--watch",
       },
       {
         argv: rawArgs.slice(2),
@@ -52,6 +58,8 @@ function parseArgumentsIntoOptions(rawArgs) {
   }
 
   return {
+    dev: args["--dev"] || false,
+    start: args["--start"] || false,
     all: args["--all"] || false,
     init: args["--init"] || false,
     layout: args["--layout"],
@@ -67,9 +75,10 @@ function parseArgumentsIntoOptions(rawArgs) {
     only: args["--only"] || false,
     config: args["--config"] || false,
     set: args["--set"] || false,
-    watch:args["--watch"] || false,
+    watch: args["--watch"] || false,
     name: args._[0],
     url: args._[1],
     cwd: process.cwd(),
+    path: fileURLToPath(path.dirname(import.meta.url))
   };
 }

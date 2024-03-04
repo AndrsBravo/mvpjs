@@ -11,6 +11,7 @@ import recap from "./scripts/configRecap.js";
 import setConfig from "./scripts/setConfig.js";
 import setC from "./scripts/set.js"
 import watch from "./scripts/watch.js"
+import commands from "./scripts/commands.js";
 
 export default async function callActions(options) {
   const task = new Listr([
@@ -73,6 +74,11 @@ export default async function callActions(options) {
       title: "Setting Watch Mode",
       task: async () => watch(options),
       enabled: () => options.watch,
+    },
+    {
+      title: "Start dev mode",
+      task: async () => commands(options),
+      enabled: () => options.dev,
     },
 
   ]);
