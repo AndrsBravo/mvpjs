@@ -1,6 +1,6 @@
 import Listr from "listr";
 import setAll from "./strategies/AllStrategy.js";
-import initProject from "./strategies/InitStrategy.js";
+import initProject, { init } from "./strategies/InitStrategy.js";
 import creatingLayout from "./strategies/LayoutStrategy.js";
 import creatingEndPointCollection from "./strategies/EndPointCollectionStrategy.js";
 import creatingModel from "./strategies/ModelStrategy.js";
@@ -11,7 +11,7 @@ import recap from "./scripts/configRecap.js";
 import setConfig from "./scripts/setConfig.js";
 import setC from "./scripts/set.js"
 import watch from "./scripts/watch.js"
-import commands from "./scripts/commands.js";
+import starters from "server/starters.js";
 
 export default async function callActions(options) {
   const task = new Listr([
@@ -22,7 +22,7 @@ export default async function callActions(options) {
     },
     {
       title: "Initialize project",
-      task: () => initProject(options),
+      task: () => init(options),
       enabled: () => options.init,
     },
     {
@@ -76,9 +76,19 @@ export default async function callActions(options) {
       enabled: () => options.watch,
     },
     {
-      title: "Start dev mode",
-      task: async () => commands(options),
+      title: "  Start dev mode",
+      task: async () => await starters.dev(options),
       enabled: () => options.dev,
+    },
+    {
+      title: "Start production mode",
+      task: async () => await starters.start(options),
+      enabled: () => options.prod,
+    },
+    {
+      title: "Building for production",
+      task: async () => starters.build(options),
+      enabled: () => options.build,
     },
 
   ]);

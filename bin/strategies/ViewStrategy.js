@@ -52,7 +52,7 @@ export default async function creatingView(options) {
 }
 
 async function creatingViewOld(options) {
-  console.log("%s Creating View process here!", chalk.blue.bold(">"));
+  //console.log("%s Creating View process here!", chalk.blue.bold(">"));
   options = getTemplateDirectory(options, "view/View.js");
   if (!options.view) {
     console.error("%s View Name missed", chalk.red.bold("ERROR"));
@@ -86,7 +86,7 @@ async function creatingViewOld(options) {
   const fileExists = fs.existsSync(file);
 
   if (fileExists) {
-    console.log("-----The View Exists");
+    //console.log("-----The View Exists");
     return;
   }
 
@@ -107,7 +107,7 @@ async function creatingViewOld(options) {
       );
       return;
     }
-    console.log(`%s View ${options.view} created`, chalk.green.bold("DONE"));
+    //console.log(`%s View ${options.view} created`, chalk.green.bold("DONE"));
   });
 
   config.resources[options.view.toLowerCase()] = file.replaceAll(

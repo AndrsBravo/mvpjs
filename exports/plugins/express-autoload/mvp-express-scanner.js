@@ -1,15 +1,16 @@
 import fs from "fs";
 import chalk from "chalk";
 import { dirname, join } from "path";
-
+import express from "express"
 export async function scanDir(dir) {
 
-    //  console.log("Este es el dir a buscar", dir);
+    //  //console.log("Este es el dir a buscar", dir);
 
     const modules = [];
 
     function findModules(path) {
 
+        //    //console.log("Scanning path", path);
         const list = fs.readdirSync(path, { withFileTypes: true });
 
         for (let item of list) {
@@ -29,7 +30,7 @@ export async function scanDir(dir) {
 
 export function scanViewsDir(dir) {
 
-    //   console.log("Este es el dir a buscar", dir);
+    //   //console.log("Este es el dir a buscar", dir);
 
     const views = {};
     const viewsArray = [];
@@ -98,7 +99,7 @@ export function getServerViews({ viewsPath, viewsFile, viewsFilePath }) {
 
 }
 
-export async function getServerMiddleWare(modules, express) {
+export async function getServerMiddleWare(modules) {
 
     let router;
 
@@ -133,7 +134,7 @@ export async function getServerMiddleWare(modules, express) {
         add = TEST_ROUTE_REGEXP.test(content) ? devOrProdTest(content) : false
 
         if (add) {
-            //  console.log("-----Agregando el route", file);
+            //  //console.log("-----Agregando el route", file);
 
             const routeHandler = await import(file);
             if (!routeHandler) continue;
@@ -162,8 +163,10 @@ export async function getClientRoutesObject({ clientRoutePath, clientRouteFilePa
 
     const modules = await scanDir(clientPath)
 
-    const s = 'export default {content}'
-    const routes = []
+    const routesFileContent = 'export default {content}'
+    const routes = {}
+
+    // //console.log(modules);
 
     for (let module of modules) {
 
@@ -172,23 +175,105 @@ export async function getClientRoutesObject({ clientRoutePath, clientRouteFilePa
 
         const content = fs.readFileSync(file);
 
-        const TEST_LAYOUT_REGEXP = /@layout/i;
-        const TEST_PAGE_REGEXP = /@page[\s]*[\r]*\([\s]*['|"]{0,1}[\/]{0,1}([\w]*)['|"]{0,1}[\s]*[\r]*\)/i;
+        //   //console.log(await import(file));
+
+        // const TEST_LAYOUT_REGEXP = /@layout/i;
+        // const TEST_LAYOUT_REGEXP = /@layout[\s]*[\r]*\([\s]*['|"]{0,1}[\/]{0,1}([\w]*)['|"]{0,1}[\s]*[\r]*\)/i;
+        // const TEST_PAGE_REGEXP = /@page[\s]*[\r]*\([\s]*['|"]{0,1}[\/]{0,1}([\w]*)['|"]{0,1}[\s]*[\r]*\)/i;
+        const TEST_LAYOUT_REGEXP = /@layout[\s]*[\r]*\([\s]*['|"]{0,1}[\/]{0,1}([\w\/]*)['|"]{0,1}[\s]*[\r]*\)/i;
+        const TEST_PAGE_REGEXP = /@page[\s]*[\r]*\([\s]*['|"]{0,1}[\/]{0,1}([\w\/]*)['|"]{0,1}[\s]*[\r]*\)/i;
+
+        const importText = `async()=> await import('${file}')`
 
         if (TEST_LAYOUT_REGEXP.test(content)) {
-            routes.push(`layout:()=> import("${file}")`)
+
+            const path = TEST_LAYOUT_REGEXP.exec(content)[1]
+
+            if (!path || path == '/') {
+
+                if (!routes[`'/'`]) routes[`'/'`] = {}
+                routes[`'/'`]['layout'] = importText;
+                //console.log({ routes });
+                continue
+            }
+
+
+            const a = path.split('/')
+
+            let el = routes;
+            let property = "";
+
+            for (const iterator of a) {
+
+                if (iterator == '') continue;
+
+                if (!el[`'${iterator}'`]) el[`'${iterator}'`] = {}
+
+                el = el[`'${iterator}'`]
+                property = iterator;
+
+            }
+
+            el['layout'] = importText
+
         }
 
         if (TEST_PAGE_REGEXP.test(content)) {
 
             const path = TEST_PAGE_REGEXP.exec(content)[1]
 
-            if (path) {
-                routes.push(`'${path}':()=> import("${file}")`)
+            if (!path || path == '/') {
+
+                if (!routes[`'/'`]) routes[`'/'`] = {}
+                routes[`'/'`]['page'] = importText;
                 continue
             }
 
-            routes.push(`'/':()=> import("${file}")`)
+
+            const a = path.split('/')
+
+            let element = routes;
+            let property = "";
+
+            if (a.length == 1) {
+
+                let iterator = a[0];
+
+                if (iterator == '') continue;
+
+                //   //console.log("Page route", iterator);
+
+                if (!element[`'${iterator}'`]) element[`'${iterator}'`] = {}
+                element = element[`'${iterator}'`]
+
+                //   //console.log("Page route", el);
+                //  //console.log(importText);
+
+                element['page'] = importText
+
+                //    //console.log("Page route", el);
+                continue
+
+            }
+
+            //   //console.log(routes);
+            let otro = routes;
+            property = "";
+
+            for (const iterator of a) {
+
+                if (iterator == '') continue;
+                if (property == '') { property = iterator; continue }
+
+                if (!otro[`'${property}'`]) otro[`'${property}'`] = {}
+
+                otro = otro[`'${property}'`]
+                property = iterator;
+
+            }
+
+            otro[`'${property}'`] = importText
+            //     //console.log("El otro", routes);
 
         }
     }
@@ -198,7 +283,10 @@ export async function getClientRoutesObject({ clientRoutePath, clientRouteFilePa
     }
 
     const mvpConfigFilePath = join(clientRoutePath, "mvp.config.js")
-    const data = s.replace("content", routes.join(","))
+    // const data = routesFileContent.replace("content", routes.join(","))
+    //  //console.log("Antes de escribir", routes);
+    let data = JSON.stringify(routes).replaceAll("\"", "");
+    data = routesFileContent.replace("{content}", data)
     fs.writeFileSync(clientRouteFilePath, data, { encoding: "utf-8" })
     const mvpConfigFileRoute = join(process.cwd(), "mvp.config.js");
     let mvpConfigContent = "export default {};"

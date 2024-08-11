@@ -1,1 +1,1 @@
-import { Page } from "mvp";export default class extends Page {constructor(name) {super({name, sections:{}});}}
+import { Page } from "mvpjs"; export default class extends Page { constructor(name) { super({ name, sections: {} }); } }

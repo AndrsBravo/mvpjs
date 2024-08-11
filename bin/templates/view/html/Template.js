@@ -1,1 +1,1 @@
-import { Template, tags } from "mvp";export default class extends Template {constructor() {super("TemplateName", html(""));}}
+import { Template, tags } from "mvpjs"; export default class extends Template { constructor() { super("TemplateName", html("")); } }

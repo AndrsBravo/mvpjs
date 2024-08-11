@@ -1,5 +1,5 @@
 import arg from "arg";
-import path from "node:path"
+import { dirname } from "node:path"
 import { fileURLToPath } from "url";
 
 export default function (args) {
@@ -10,55 +10,56 @@ function parseArgumentsIntoOptions(rawArgs) {
 
   let args = {};
   try {
-    args = arg(
-      {
-        "--dev": Boolean,
-        "--start": Boolean,
-        "--set": Boolean,
-        "--all": Boolean,
-        "--init": Boolean,
-        "--layout": String,
-        "--endpoint": String,
-        "--model": String,
-        "--page": String,
-        "--view": String,
-        "--template": String,
-        "--html": String,
-        "--belong": String,
-        "--only": Boolean,
-        "--recap": String,
-        "--dir": String,
-        "--config": Boolean,
-        "--watch": Boolean,
-        "-all": "--all",
-        "-i": "--init",
-        "-l": "--layout",
-        "-e": "--endpoint",
-        "-m": "--model",
-        "-p": "--page",
-        "-v": "--view",
-        "-t": "--template",
-        "-h": "--html",
-        "-o": "--only",
-        "-b": "--belong",
-        "-r": "--recap",
-        "-d": "--dir",
-        "-c": "--config",
-        "-s": "--set",
-        "-w": "--watch",
-      },
+    args = arg({
+      "--dev": Boolean,
+      "--prod": Boolean,
+      "--build": Boolean,
+      "--start": Boolean,
+      "--set": Boolean,
+      "--all": Boolean,
+      "--init": Boolean,
+      "--layout": String,
+      "--endpoint": String,
+      "--model": String,
+      "--page": String,
+      "--view": String,
+      "--template": String,
+      "--html": String,
+      "--belong": String,
+      "--only": Boolean,
+      "--recap": String,
+      "--dir": String,
+      "--config": Boolean,
+      "--watch": Boolean,
+      "-all": "--all",
+      "-i": "--init",
+      "-l": "--layout",
+      "-e": "--endpoint",
+      "-m": "--model",
+      "-p": "--page",
+      "-v": "--view",
+      "-t": "--template",
+      "-h": "--html",
+      "-o": "--only",
+      "-b": "--belong",
+      "-r": "--recap",
+      "-d": "--dir",
+      "-c": "--config",
+      "-s": "--set",
+      "-w": "--watch",
+    },
       {
         argv: rawArgs.slice(2),
-      }
-    );
+      });
   } catch (error) {
     console.error(error);
-    //console.error(`unknown or unexpected option: ${rawArgs.slice(2)}`);
     process.exit(1);
   }
 
   return {
     dev: args["--dev"] || false,
+    prod: args["--prod"] || false,
+    build: args["--build"] || false,
     start: args["--start"] || false,
     all: args["--all"] || false,
     init: args["--init"] || false,
@@ -79,6 +80,6 @@ function parseArgumentsIntoOptions(rawArgs) {
     name: args._[0],
     url: args._[1],
     cwd: process.cwd(),
-    path: fileURLToPath(path.dirname(import.meta.url))
+    path: fileURLToPath(dirname(import.meta.url))
   };
 }

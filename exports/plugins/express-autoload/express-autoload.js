@@ -1,13 +1,11 @@
 import { getServerMiddleWare, scanDir } from "./mvp-express-scanner.js";
-import { join } from "path"
+import constants from "bin/scripts/constants.js";
+
 export default async function autoLoad(config) {
 
-    const cwd = config.cwd || process.cwd();
-
-    const serverDir = config.serverDir || "/backend/server"
-    const serverPath = join(cwd, serverDir);
+    const { serverPath } = constants.files;
     const serverModules = await scanDir(serverPath)
-    const serverMiddleWare = await getServerMiddleWare(serverModules, config.express)
+    const serverMiddleWare = await getServerMiddleWare(serverModules)
 
     return serverMiddleWare;
 

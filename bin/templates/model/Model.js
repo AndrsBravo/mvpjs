@@ -1,1 +1,1 @@
-import { Model } from "mvp"; export default class extends Model { constructor() { super({ name: "ModelName", title: "", endpoint: new EndpointCollection(), endPointsFetchActionsAllowed: [] }); } }
+import { Model } from "mvpjs"; export default class extends Model { constructor() { super({ name: "ModelName", title: "", endpoint: new EndpointCollection(), endPointsFetchActionsAllowed: [] }); } }

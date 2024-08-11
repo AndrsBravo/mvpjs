@@ -11,7 +11,8 @@
   "files": [
     "bin",
     "exports",
-    "lib"
+    "lib",
+    "server"
   ],
   "exports": {
     ".": "./mvp.js",
@@ -20,16 +21,25 @@
     "./end-point-data-source": "./exports/data-sources/EndPointDataSource.js",
     "./vite-template": "./exports/plugins/vite-template.js",
     "./vite-autoload": "./exports/plugins/vite-autoload.js",
-    "./vite-express-integration": "./exports/plugins/vite-express-integration.js",
+    "./express-integration-prod": "./exports/plugins/express-integration/express-integration-prod.js",
+    "./express-integration-dev": "./exports/plugins/express-integration/express-integration-dev.js",
     "./express-autoload": "./exports/plugins/express-autoload/express-autoload.js"
   },
   "dependencies": {
     "arg": "^5.0.1",
+    "bin": "file:./bin",
     "chalk": "^5.0.0",
     "cheerio": "^1.0.0-rc.10",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
     "inquirer": "^9.2.7",
-    "listr": "^0.14.3",
     "lib": "file:./lib",
-    "ncp": "^2.0.0"
+    "listr": "^0.14.3",
+    "ncp": "^2.0.0",
+    "server": "file:./server",
+    "sirv": "^2.0.4"
+  },
+  "devDependencies": {
+    "vite": "^5.0.10"
   }
 }

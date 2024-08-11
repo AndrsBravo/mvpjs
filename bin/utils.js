@@ -10,7 +10,7 @@ import constants from "./scripts/constants.js";
 const copy = promisify(ncp);
 
 export function setDefaults(options) {
-  console.log(`%s Creating ${options.target} process`, chalk.white.bgBlue.bold(" > "));
+  //console.log(`%s Creating ${options.target} process`, chalk.white.bgBlue.bold(" > "));
 
   getTemplateDirectory(options);
 
@@ -31,7 +31,7 @@ export async function callingConfigParams(options) {
 
 export async function readingTemplateContent(options) {
   try {
-    options.templateContent = fs.readFileSync(options.templateDirectory, "utf8");
+    options.templateContent = fs.readFileSync(options.templateDirectory, { encoding: 'utf-8' });
     options.templateContent = options.templateContent.replaceAll(options.templateName, options.value);
   } catch (ex) { }
 }
@@ -46,8 +46,8 @@ export async function readingHtmlFileContent(options) {
   const mvp = fs.readFileSync(jsonPath, "utf-8");
   const json = JSON.parse(mvp);
 
-  console.log(mvp);
-  console.log(json);
+  //console.log(mvp);
+  //console.log(json);
 
   if (!json.html) {
     throw "The HTMLFile was not found";
@@ -81,8 +81,8 @@ export async function fileTesting(options) {
 
   if (fileExists) {
 
-    console.log(`%s The file ${options.value} for ${options.target} already exists`, chalk.white.bgYellow.bold(" FILE EXISTS "));
-    console.log(`%s you have to remove it first`, chalk.bgYellow.white.bold(" FILE EXISTS "));
+    //console.log(`%s The file ${options.value} for ${options.target} already exists`, chalk.white.bgYellow.bold(" FILE EXISTS "));
+    //console.log(`%s you have to remove it first`, chalk.bgYellow.white.bold(" FILE EXISTS "));
     throw new Error(`%s The file ${options.value} for ${options.target} already exists`, chalk.bgRed.bold(" FILE EXISTS "));
 
   }
@@ -152,24 +152,25 @@ export function writeMvpConfig(options) {
   options.config = true;
   fs.writeFileSync(configUrl, options.mvpConfigContent, (error) => {
     if (error) { console.error(`%s Could not ReWrite Config content`, chalk.red.bold(" ERROR ")); return; }
-    console.log(`%s Config File ReWrited`, chalk.green.bold(" DONE "));
+    //console.log(`%s Config File ReWrited`, chalk.green.bold(" DONE "));
   });
 }
 
 export function getTemplateDirectory(options) {
-  const filepath = new URL(import.meta.url).pathname.substring(1);
-
-  options.templateDirectory = path.resolve(filepath, "../templates", options.templateDirName);
+  // const filepath = new URL(import.meta.url).pathname.substring(1);
+  //options.templateDirectory = path.join(filepath, "../templates/init");
+  options.templateDirectory = options.path + "/templates/init";
 
   return options;
 }
 
 export function toCapitalizeCase(text) {
+
   return (text.trim().charAt(0).toUpperCase() + text.trim().substr(1).toLowerCase());
 }
 
-export async function copyTemplateFiles(options) {
-  return copy(options.templateDirectory, options.cwd, { clobber: false, });
+export async function copyTemplateFiles({ templateDirectory, copyTo }) {
+  return await copy(templateDirectory, copyTo, { clobber: false, });
 }
 
 export function setUpFilePathToBelong(options) {

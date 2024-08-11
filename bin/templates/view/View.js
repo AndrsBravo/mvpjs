@@ -1,1 +1,1 @@
-import { View } from "mvp";export default class extends View {constructor() {super({name: "ViewName",template: null,target: "content",templateOption: "templateAdd",});  }}
+import { View } from "mvpjs"; export default class extends View { constructor() { super({ name: "ViewName", template: null, target: "content", templateOption: "templateAdd", }); } }

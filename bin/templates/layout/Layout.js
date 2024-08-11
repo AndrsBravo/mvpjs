@@ -1,1 +1,1 @@
-import { Layout } from "mvp";export default class extends Layout {constructor() {super({ name: "LayoutName", view: null });}start() {}}
+import { Layout } from "mvpjs"; export default class extends Layout { constructor() { super({ name: "LayoutName", view: null }); } start() { } }

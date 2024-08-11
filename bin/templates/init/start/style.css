@@ -1,0 +1,100 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main,
+section {
+  min-width: 100%;
+  height: 100%;
+}
+
+section {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4em;
+}
+section.selected {
+  display: flex;
+}
+article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  width: fit-content;
+  color: rgb(100, 100, 100);
+}
+.logo {
+  display: block;
+  width: 320px;
+}
+
+.logo.small {
+  width: 8em;
+  margin-bottom: 1em;
+}
+
+article h1 {
+  font-size: 1.5em;
+}
+
+article h3 {
+  font-size: 1em;
+  font-weight: 400;
+}
+
+article button {
+  color: rgb(100, 100, 100);
+  font-size: large;
+  padding: 0.8em;
+  padding-bottom: 0.65em;
+  border-radius: 4px;
+  border: solid 1px transparent;
+  background-color: rgb(240, 240, 240);
+}
+article button:hover {
+  border-color: #1658d9;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.05);
+  color: #1658d9;
+}
+
+article #display {
+  color: #1658d9;
+}
+section.not-found {
+  justify-items: center;
+  gap: 0em;
+}
+section.not-found .logo {
+  background-color: white;
+  padding: 5px;
+}
+section.not-found .number {
+  font-size: 10em;
+  font-weight: 600;
+  color: #0e388b;
+  text-align: center;
+  vertical-align: text-top;
+  letter-spacing: -10px;
+  line-height: 0;
+  padding: 0.3em 0 0.6em 0;
+}
+
+section.not-found article {
+  align-items: center;
+  justify-content: center;
+  gap: 0em;
+}

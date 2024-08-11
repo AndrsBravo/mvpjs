@@ -1,4 +1,4 @@
-/** @type {import("lib/mvp/endpoint/requestInitBuilder")} */
+/** @type {import("lib/mvp/endpoint/requestInitBuilder").RequestInit} */
 export const { requestInitBuilder } = await import("lib/mvp/endpoint/requestInitBuilder");
 
 /**@type {import("lib/mvp/endpoint/EndPointCollection").EndPointCollection} EndPointCollection */

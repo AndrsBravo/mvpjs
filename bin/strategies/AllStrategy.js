@@ -17,3 +17,4 @@ export default async function creatingEndPointCollection(options) {
   options.view = capName + "View";
   options.template = capName + "Template";
 }
+
