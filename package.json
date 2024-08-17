@@ -1,12 +1,14 @@
 {
   "name": "mvpjs",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "type": "module",
+  "description": "Vanilla JavaScript Framework",
   "bin": {
     "mvpjs": "bin/cli.js"
   },
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "semantic-release": "semantic-release"
   },
   "files": [
     "bin",
@@ -39,7 +41,22 @@
     "server": "file:./server",
     "sirv": "^2.0.4"
   },
+  "homepage": "https://github.com/AndrsBravo/mvpjs.git#readme",
+  "bugs": {
+    "url": "https://github.com/AndrsBravo/mvpjs.git/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndrsBravo/mvpjs.git"
+  },
   "devDependencies": {
+    "semantic-release": "^24.1.0",
     "vite": "^5.0.10"
-  }
+  },
+  "keywords": [
+    "Framework",
+    "Vanilla JavaScript",
+    "JavaScript Framework",
+    "FullStack Framework"
+  ]
 }
