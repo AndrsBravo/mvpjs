@@ -17,8 +17,8 @@
     "server"
   ],
   "exports": {
-    ".": "./mvp.js",
-    "./app": "./lib.js",
+    ".": "./exports/mvp.js",
+    "./app": "./exports/lib.js",
     "./ssr": "./lib/mvp/ssr/ssRender.js",
     "./end-point-data-source": "./exports/data-sources/EndPointDataSource.js",
     "./vite-template": "./exports/plugins/vite-template.js",
@@ -39,7 +39,8 @@
     "listr": "^0.14.3",
     "ncp": "^2.0.0",
     "server": "file:./server",
-    "sirv": "^2.0.4"
+    "sirv": "^2.0.4",
+    "vite": "^5.0.10"
   },
   "homepage": "https://github.com/AndrsBravo/mvpjs.git#readme",
   "bugs": {
@@ -50,8 +51,7 @@
     "url": "git+https://github.com/AndrsBravo/mvpjs.git"
   },
   "devDependencies": {
-    "semantic-release": "^24.1.0",
-    "vite": "^5.0.10"
+    "semantic-release": "^24.1.0"
   },
   "keywords": [
     "Framework",
