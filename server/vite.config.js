@@ -4,6 +4,7 @@ import viteAutoLoad from "mvpjs/vite-autoload";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 
+
 const { default: mvpConfig } = await import(process.cwd() + "/mvp.config.js") || { default: {} }
 
 ////console.log("---llamando el config");
@@ -14,16 +15,23 @@ export default defineConfig({
   root: process.cwd(),
   appType: "custom",
   server: {
-    middlewareMode: true
+    middlewareMode: true,
+    fs: {
+      allow: [
+        resolve(process.cwd()),
+        resolve(process.cwd(), "frontend"),
+        resolve(process.cwd(), "node_modules", ".mvpjs")
+      ]
+    }
   },
   optimizeDeps: {
-    force: true
+    force: true,
   },
   build: {
 
     target: "esnext",
     outDir: process.env.outDir || "./dist",
-    modulePreload: false,
+    modulePreload: true,
     emptyOutDir: true,
     rollupOptions: {
 
