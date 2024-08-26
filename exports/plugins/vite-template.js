@@ -6,7 +6,7 @@ function viteHtmlTemplate() {
         enforce: "pre",
         resolveId: {
             async handler(id, importer, options) {
-                console.log("----resolveId---", id);
+                //   console.log("----resolveId---", id);
                 if (/\.html$/.test(id) && importer && !options.scan) {
                     let res = await this.resolve(id, importer, {
                         skipSelf: true,
@@ -22,7 +22,7 @@ function viteHtmlTemplate() {
 
         transform(src, id) {
 
-            console.log("transform-----", id);
+            //  console.log("transform-----", id);
 
             if (/\.html$/.test(id) || /\.html\?raw$/.test(id)) {
                 return { code: formatTemplate(src), map: { mappings: "" } }
