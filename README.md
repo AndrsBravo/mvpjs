@@ -13,5 +13,3 @@ Init an `npm project` as usually `npm init -y` an then
 ```bash
 mvpjs init
 ```
-
-vite "^5.0.10"
