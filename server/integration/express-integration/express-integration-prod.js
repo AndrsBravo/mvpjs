@@ -1,10 +1,13 @@
-import serverConfig from 'server/config.js'
+import serverConfig from 'server/vite/config.js'
 import getIndex from './getIndex.js'
 import { join } from "node:path"
+import constants from "bin/scripts/constants";
+
 
 export default async () => {
 
     const { views } = serverConfig;
+    const { OUT_DIR } = constants.FILES
 
     const mvpMiddleWare = async (req, res, next) => {
 
@@ -25,7 +28,7 @@ export default async () => {
         for (const key in serverConfig.inputs) {
             if (Object.hasOwnProperty.call(res, key)) continue;
             const index = serverConfig.inputs[key];
-            res[index.key] = await getIndex(join(process.cwd(), "dist", index.file), prodSend, views);
+            res[index.key] = await getIndex(join(process.cwd(), OUT_DIR, index.file), prodSend, views);
         }
 
         next()

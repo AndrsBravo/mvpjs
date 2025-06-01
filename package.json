@@ -16,31 +16,37 @@
     "lib",
     "server"
   ],
+  "types": "./server/types.d.ts",
   "exports": {
-    ".": "./exports/mvp.js",
-    "./app": "./exports/lib.js",
-    "./ssr": "./lib/mvp/ssr/ssRender.js",
+    ".": {
+      "import": "./exports/lib.js",
+      "types": "./server/types.d.ts"
+    },
+    "./app": "./exports/mvp.js",
+    "./view": "./lib/mvp/view/View.js",
+    "./page": "./lib/mvp/page/Page.js",
+    "./model": "./lib/mvp/model/Model.js",
+    "./layout": "./lib/mvp/layout/Layout.js",
     "./end-point-data-source": "./exports/data-sources/EndPointDataSource.js",
-    "./vite-template": "./exports/plugins/vite-template.js",
-    "./vite-autoload": "./exports/plugins/vite-autoload.js",
-    "./express-integration-prod": "./exports/plugins/express-integration/express-integration-prod.js",
-    "./express-integration-dev": "./exports/plugins/express-integration/express-integration-dev.js",
-    "./express-autoload": "./exports/plugins/express-autoload/express-autoload.js"
+    "./source/fetch": "./exports/data-sources/EndPointDataSource.js",
+    "./source/ajax": "./exports/data-sources/EndPointDataSource.js",
+    "./source/event": "./exports/data-sources/EndPointDataSource.js",
+    "./source/ws": "./exports/data-sources/EndPointDataSource.js"
   },
   "dependencies": {
     "arg": "^5.0.1",
-    "bin": "file:./bin",
     "chalk": "^5.0.0",
     "cheerio": "^1.0.0-rc.10",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "inquirer": "^9.2.7",
-    "lib": "file:./lib",
     "listr": "^0.14.3",
     "ncp": "^2.0.0",
-    "server": "file:./server",
     "sirv": "^2.0.4",
-    "vite": "^5.0.10"
+    "vite": "^5.0.10",
+    "bin": "file:./bin",
+    "lib": "file:./lib",
+    "server": "file:./server"
   },
   "homepage": "https://github.com/AndrsBravo/mvpjs.git#readme",
   "bugs": {

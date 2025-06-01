@@ -37,11 +37,11 @@ export async function readingTemplateContent(options) {
 }
 export async function readingHtmlFileContent(options) {
 
-  if (!constants.files.json) {
+  if (!constants.FILES.json) {
     throw "Json file was not found";
   }
 
-  const jsonPath = path.resolve(options.cwd, constants.files.json);
+  const jsonPath = path.resolve(options.cwd, constants.FILES.json);
 
   const mvp = fs.readFileSync(jsonPath, "utf-8");
   const json = JSON.parse(mvp);

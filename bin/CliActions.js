@@ -11,7 +11,7 @@ import recap from "./scripts/configRecap.js";
 import setConfig from "./scripts/setConfig.js";
 import setC from "./scripts/set.js"
 import watch from "./scripts/watch.js"
-import starters from "server/starters.js";
+import starters from "server/starters/starters.js";
 
 export default async function callActions(options) {
   const task = new Listr([
