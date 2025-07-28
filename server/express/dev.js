@@ -9,13 +9,13 @@ const rootDir = dirname(fileURLToPath(import.meta.url));
 const configFile = join(rootDir, "./vite.config.js")
 const vite = await createServer({ configFile })
 
-const base = process.BASE || "/"
-const outDir = process.env.outDir || "dist"
-const outDirPath = join(process.cwd(), outDir)
+const base = process.env.BASE || "/"
+const publicDir = process.env.publicDir || "statics"
+const publicDirPath = join(process.cwd(), publicDir)
 
 expressServer.app.use(vite.middlewares)
 expressServer.app.use(await mvpExpressIntegration({ vite }))
-expressServer.app.use(base, sirv(outDirPath, { extensions: [] }))
+expressServer.app.use(base, sirv(publicDirPath, { extensions: [] }))
 
 // Start http server
 expressServer.run(process.env.PORT || 5173)

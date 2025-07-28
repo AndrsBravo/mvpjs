@@ -15,6 +15,7 @@ export default defineConfig({
   root: process.cwd(),
   appType: "custom",
 
+
   server: {
     middlewareMode: true,
     fs: {
@@ -35,7 +36,6 @@ export default defineConfig({
     outDir: process.env.outDir || "./dist",
     modulePreload: true,
     emptyOutDir: true,
-
     manifest: true,
 
     rollupOptions: {
