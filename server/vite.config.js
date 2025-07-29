@@ -10,7 +10,7 @@ const { default: mvpConfig } = await import(process.cwd() + "/mvp.config.js") ||
 
 export default defineConfig({
 
-  base: process.env.BASE || '/',
+  base: process.env.BASE || join("/", process.env.outDir || "dist"),
   root: process.cwd(),
   appType: "custom",
   server: {

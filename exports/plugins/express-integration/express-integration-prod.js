@@ -25,7 +25,7 @@ export default async () => {
         for (const key in serverConfig.inputs) {
             if (Object.hasOwnProperty.call(res, key)) continue;
             const index = serverConfig.inputs[key];
-            res[index.key] = await getIndex(join(process.cwd(), "dist", index.file), prodSend, views);
+            res[index.key] = await getIndex(join(process.cwd(), process.env.publicDir || "statics", process.env.outDir || "dist", index.file), prodSend, views);
         }
 
         next()
