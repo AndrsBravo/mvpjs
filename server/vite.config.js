@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import { viteHtmlTemplate } from "mvpjs/vite-template";
 import viteAutoLoad from "mvpjs/vite-autoload";
-import { dirname, resolve } from "path";
+import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 
 const { default: mvpConfig } = await import(process.cwd() + "/mvp.config.js") || { default: {} }
