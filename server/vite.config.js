@@ -4,7 +4,6 @@ import viteAutoLoad from "mvpjs/vite-autoload";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 
-
 const { default: mvpConfig } = await import(process.cwd() + "/mvp.config.js") || { default: {} }
 
 ////console.log("---llamando el config");
