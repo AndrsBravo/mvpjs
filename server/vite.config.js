@@ -30,7 +30,7 @@ export default defineConfig({
   build: {
 
     target: "esnext",
-    outDir: process.env.outDir || "./dist",
+    outDir: join("./", process.env.publicDir || "statics", process.env.outDir || "dist"),
     modulePreload: true,
     emptyOutDir: true,
     rollupOptions: {
