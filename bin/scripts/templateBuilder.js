@@ -1,4 +1,4 @@
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
 export default function templateBuilder(el) {
 
   var templateObj = { template: "", tags: new Set() }
@@ -11,15 +11,15 @@ export default function templateBuilder(el) {
   if (el.name === "svg") {
     const $ = cheerio.load(el);
     templateObj.template = $.html(el);
-    templateObj.template = templateObj.template     
+    templateObj.template = templateObj.template
       .replaceAll("<", "'<")
       .replaceAll(">", ">'+");
     templateObj.template = templateObj.template.slice(0, templateObj.template.length - 1);
-   /* templateObj.template = templateObj.template
-      .replaceAll('"', '\\"')
-      .replaceAll("<", '"<')
-      .replaceAll(">", '>"+');
-    templateObj.template = templateObj.template.slice(0, templateObj.template.length - 1);*/
+    /* templateObj.template = templateObj.template
+       .replaceAll('"', '\\"')
+       .replaceAll("<", '"<')
+       .replaceAll(">", '>"+');
+     templateObj.template = templateObj.template.slice(0, templateObj.template.length - 1);*/
     return templateObj;
   }
 

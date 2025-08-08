@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import { viteHtmlTemplate } from "mvpjs/vite-template";
 import viteAutoLoad from "mvpjs/vite-autoload";
-import { dirname, resolve } from "path";
+import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 
 const { default: mvpConfig } = await import(process.cwd() + "/mvp.config.js") || { default: {} }
@@ -10,20 +10,27 @@ const { default: mvpConfig } = await import(process.cwd() + "/mvp.config.js") ||
 
 export default defineConfig({
 
-  base: process.env.BASE || '/',
+  base: process.env.BASE || join("/", process.env.outDir || "dist"),
   root: process.cwd(),
   appType: "custom",
   server: {
-    middlewareMode: true
+    middlewareMode: true,
+    fs: {
+      allow: [
+        resolve(process.cwd()),
+        resolve(process.cwd(), "frontend"),
+        resolve(process.cwd(), "node_modules", ".mvpjs")
+      ]
+    }
   },
   optimizeDeps: {
-    force: true
+    force: true,
   },
   build: {
 
     target: "esnext",
-    outDir: process.env.outDir || "./dist",
-    modulePreload: false,
+    outDir: join("./", process.env.publicDir || "statics", process.env.outDir || "dist"),
+    modulePreload: true,
     emptyOutDir: true,
     rollupOptions: {
 

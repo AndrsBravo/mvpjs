@@ -13,7 +13,7 @@ const viewsFile = "mvp.views.mjs";
 const viewsFilePath = join(mvpPath, viewsFile);
 const serverViewsDir = process.env.SERVER_VIEWS || "/backend/server/views"
 const serverViewsPath = join(cwd, serverViewsDir);
-const outDir = process.env.outDir || "/dist";
+outDir: join("./", process.env.publicDir || "statics", process.env.outDir || "dist");
 
 const scripts =
 {
