@@ -1,6 +1,6 @@
 import { viteHtmlTemplate } from "../plugins/vite-html-template.js";
 import viteAutoLoad from "../plugins/vite-autoload.js";
-import { dirname, resolve } from "path";
+import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 
 /**@type {import("mvpjs").MvpUserConfig} */
