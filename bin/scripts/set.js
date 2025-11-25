@@ -3,11 +3,11 @@ import { resolve } from "path";
 import constants from "./constants.js";
 export default function (options) {
 
-    const { files } = constants;
+    const { FILES } = constants;
 
-    const node_module = resolve(options.cwd, files.node);
-    const mvp = resolve(options.cwd, files.mvp);
-    const json = resolve(options.cwd, files.json);
+    const node_module = resolve(options.cwd, FILES.NODE_MODULES);
+    const mvp = resolve(options.cwd, FILES.MVP_FILE_PATH);
+    const json = resolve(options.cwd, FILES.json);
 
     if (!fs.existsSync(node_module)) fs.mkdirSync(node_module);
     if (!fs.existsSync(mvp)) fs.mkdirSync(mvp);
@@ -25,7 +25,7 @@ export default function (options) {
 
     object.html = html;
 
-    fs.writeFileSync(json, JSON.stringify(object), (err) => {
+    fs.writeFileSync(json, JSON.stringify(object), (error) => {
         if (error) { console.log(error); return; }
         console.log(`%s Config File ReWrited`, chalk.green.bold(" DONE "));
     });

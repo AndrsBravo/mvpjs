@@ -91,8 +91,8 @@ export async function init(options) {
 
     if (!packageJson.scripts) packageJson.scripts = {};
 
-    for (const key in constants.npm.scripts) {
-      packageJson.scripts[key] = constants.npm.scripts[key];
+    for (const key in constants.NPM.SCRIPTS) {
+      packageJson.scripts[key] = constants.NPM.SCRIPTS[key];
     };
 
     fs.writeFileSync(packagePath, JSON.stringify(packageJson), { encoding: 'utf-8' })

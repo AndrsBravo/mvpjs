@@ -5,8 +5,8 @@ import { fileURLToPath } from 'node:url'
 import fs from 'node:fs'
 
 const rootDir = dirname(fileURLToPath(import.meta.url));
-const { cwd, outDir, viewsFilePath } = constants.files;
-const { default: views } = fs.existsSync(viewsFilePath) ? await import(viewsFilePath) : { default: null }
+const { CWD, OUT_DIR, VIEWS_FILE_PATH } = constants.FILES;
+const { default: views } = fs.existsSync(VIEWS_FILE_PATH) ? await import(VIEWS_FILE_PATH) : { default: null }
 
 const inputs = {
     index: {

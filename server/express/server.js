@@ -2,7 +2,7 @@ import express from 'express'
 import dotenv from "dotenv"
 dotenv.config()
 
-import expressAutoLoad from "mvpjs/express-autoload"
+import expressAutoLoad from "../integration/express-autoload/express-autoload.js"
 
 const app = express()
 

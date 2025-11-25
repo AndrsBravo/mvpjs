@@ -1,4 +1,4 @@
-import serverConfig from 'server/config.js'
+import serverConfig from 'server/vite/config.js'
 import getIndex from './getIndex.js';
 import { join } from "node:path"
 export default async ({ vite }) => {
