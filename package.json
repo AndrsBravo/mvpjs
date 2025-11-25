@@ -1,69 +1,69 @@
 {
-  "name": "mvpjs",
-  "version": "0.0.0-development",
-  "type": "module",
-  "description": "Vanilla JavaScript Framework",
-  "bin": {
-    "mvpjs": "bin/cli.js"
-  },
-  "scripts": {
-    "test": "node --test",
-    "semantic-release": "semantic-release"
-  },
-  "files": [
-    "bin",
-    "exports",
-    "lib",
-    "server"
-  ],
-  "exports": {
-    ".": "./exports/mvp.js",
-    "./app": "./exports/lib.js",
-    "./ssr": "./lib/mvp/ssr/ssRender.js",
-    "./view": "./lib/mvp/view/View.js",
-    "./page": "./lib/mvp/page/Page.js",
-    "./model": "./lib/mvp/model/Model.js",
-    "./layout": "./lib/mvp/layout/Layout.js",
-    "./end-point-data-source": "./exports/data-sources/EndPointDataSource.js",
-    "./vite-template": "./exports/plugins/vite-template.js",
-    "./vite-autoload": "./exports/plugins/vite-autoload.js",
-    "./express-integration-prod": "./exports/plugins/express-integration/express-integration-prod.js",
-    "./express-integration-dev": "./exports/plugins/express-integration/express-integration-dev.js",
-    "./express-autoload": "./exports/plugins/express-autoload/express-autoload.js"
-  },
-  "dependencies": {
-    "arg": "^5.0.1",
-    "bin": "file:./bin",
-    "chalk": "^5.0.0",
-    "cheerio": "^1.0.0-rc.10",
-    "dotenv": "^16.4.1",
-    "express": "^4.18.2",
-    "inquirer": "^9.2.7",
-    "lib": "file:./lib",
-    "listr": "^0.14.3",
-    "ncp": "^2.0.0",
-    "server": "file:./server",
-    "sirv": "^2.0.4",
-    "vite": "^5.0.10"
-  },
-  "homepage": "https://github.com/AndrsBravo/mvpjs.git#readme",
-  "bugs": {
-    "url": "https://github.com/AndrsBravo/mvpjs.git/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AndrsBravo/mvpjs.git"
-  },
-  "devDependencies": {
-    "semantic-release": "^24.1.0"
-  },
-  "keywords": [
-    "Framework",
-    "Vanilla JavaScript",
-    "JavaScript Framework",
-    "FullStack Framework"
-  ],
-  "publishConfig": {
-    "access": "public"
-  }
+	"name": "mvpjs",
+	"version": "0.0.0-development",
+	"type": "module",
+	"description": "Vanilla JavaScript Framework",
+	"bin": {
+		"mvpjs": "bin/cli.js"
+	},
+	"scripts": {
+		"test": "node --test",
+		"semantic-release": "semantic-release"
+	},
+	"files": [
+		"bin",
+		"exports",
+		"lib",
+		"server"
+	],
+	"exports": {
+		".": "./exports/mvp.js",
+		"./app": "./exports/lib.js",
+		"./view": "./lib/mvp/view/View.js",
+		"./page": "./lib/mvp/page/Page.js",
+		"./ssr": "./lib/mvp/ssr/ssRender.js",
+		"./model": "./lib/mvp/model/Model.js",
+		"./layout": "./lib/mvp/layout/Layout.js",
+		"./vite-template": "./exports/plugins/vite-template.js",
+		"./vite-autoload": "./exports/plugins/vite-autoload.js",
+		"./end-point-data-source": "./exports/data-sources/EndPointDataSource.js",
+		"./express-autoload": "./exports/plugins/express-autoload/express-autoload.js",
+		"./express-integration-prod": "./exports/plugins/express-integration/express-integration-prod.js",
+		"./express-integration-dev": "./exports/plugins/express-integration/express-integration-dev.js"
+	},
+	"dependencies": {
+		"arg": "^5.0.1",
+		"bin": "file:./bin",
+		"chalk": "^5.0.0",
+		"cheerio": "^1.0.0-rc.10",
+		"dotenv": "^16.4.1",
+		"express": "^4.18.2",
+		"inquirer": "^9.2.7",
+		"lib": "file:./lib",
+		"listr": "^0.14.3",
+		"ncp": "^2.0.0",
+		"server": "file:./server",
+		"sirv": "^2.0.4",
+		"vite": "^5.0.10"
+	},
+	"homepage": "https://github.com/AndrsBravo/mvpjs.git#readme",
+	"bugs": {
+		"url": "https://github.com/AndrsBravo/mvpjs.git/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/AndrsBravo/mvpjs.git"
+	},
+	"devDependencies": {
+		"semantic-release": "^24.1.0"
+	},
+	"keywords": [
+		"Framework",
+		"Vanilla JavaScript",
+		"JavaScript Framework",
+		"FullStack Framework"
+	],
+	"publishConfig": {
+		"access": "public"
+	}
 }
