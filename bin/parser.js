@@ -1,59 +1,60 @@
-import arg from "arg";
+import arg from "arg"
 import { dirname } from "node:path"
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "url"
 
 export default function (args) {
-  return parseArgumentsIntoOptions(args);
+  return parseArgumentsIntoOptions(args)
 }
 
 function parseArgumentsIntoOptions(rawArgs) {
-
-  let args = {};
+  let args = {}
   try {
-    args = arg({
-      "--dev": Boolean,
-      "--prod": Boolean,
-      "--build": Boolean,
-      "--start": Boolean,
-      "--set": Boolean,
-      "--all": Boolean,
-      "--init": Boolean,
-      "--layout": String,
-      "--endpoint": String,
-      "--model": String,
-      "--page": String,
-      "--view": String,
-      "--template": String,
-      "--html": String,
-      "--belong": String,
-      "--only": Boolean,
-      "--recap": String,
-      "--dir": String,
-      "--config": Boolean,
-      "--watch": Boolean,
-      "-all": "--all",
-      "-i": "--init",
-      "-l": "--layout",
-      "-e": "--endpoint",
-      "-m": "--model",
-      "-p": "--page",
-      "-v": "--view",
-      "-t": "--template",
-      "-h": "--html",
-      "-o": "--only",
-      "-b": "--belong",
-      "-r": "--recap",
-      "-d": "--dir",
-      "-c": "--config",
-      "-s": "--set",
-      "-w": "--watch",
-    },
+    args = arg(
+      {
+        "--dev": Boolean,
+        "--prod": Boolean,
+        "--build": Boolean,
+        "--start": Boolean,
+        "--set": Boolean,
+        "--all": Boolean,
+        "--init": Boolean,
+        "--layout": String,
+        "--endpoint": String,
+        "--model": String,
+        "--page": String,
+        "--view": String,
+        "--template": String,
+        "--html": String,
+        "--belong": String,
+        "--only": Boolean,
+        "--recap": String,
+        "--dir": String,
+        "--config": Boolean,
+        "--watch": Boolean,
+        "-all": "--all",
+        "-i": "--init",
+        "-l": "--layout",
+        "-e": "--endpoint",
+        "-m": "--model",
+        "-p": "--page",
+        "-v": "--view",
+        "-t": "--template",
+        "-h": "--html",
+        "-o": "--only",
+        "-b": "--belong",
+        "-r": "--recap",
+        "-d": "--dir",
+        "-c": "--config",
+        "-s": "--set",
+        "-w": "--watch",
+      },
       {
         argv: rawArgs.slice(2),
-      });
+      },
+    )
   } catch (error) {
-    console.error(error);
-    process.exit(1);
+    console.error(error)
+    process.exit(1)
   }
 
   return {
@@ -80,6 +81,6 @@ function parseArgumentsIntoOptions(rawArgs) {
     name: args._[0],
     url: args._[1],
     cwd: process.cwd(),
-    path: fileURLToPath(dirname(import.meta.url))
-  };
+    path: fileURLToPath(dirname(import.meta.url)),
+  }
 }

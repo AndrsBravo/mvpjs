@@ -1,17 +1,17 @@
-import Listr from "listr";
-import setAll from "./strategies/AllStrategy.js";
-import initProject, { init } from "./strategies/InitStrategy.js";
-import creatingLayout from "./strategies/LayoutStrategy.js";
-import creatingEndPointCollection from "./strategies/EndPointCollectionStrategy.js";
-import creatingModel from "./strategies/ModelStrategy.js";
-import creatingPage from "./strategies/PageStrategy.js";
-import creatingView from "./strategies/ViewStrategy.js";
-import creatingTemplate from "./strategies/TemplateStrategy.js";
-import recap from "./scripts/configRecap.js";
-import setConfig from "./scripts/setConfig.js";
+import Listr from "listr"
+import setAll from "./strategies/AllStrategy.js"
+import initProject, { init } from "./strategies/InitStrategy.js"
+import creatingLayout from "./strategies/LayoutStrategy.js"
+import creatingEndPointCollection from "./strategies/EndPointCollectionStrategy.js"
+import creatingModel from "./strategies/ModelStrategy.js"
+import creatingPage from "./strategies/PageStrategy.js"
+import creatingView from "./strategies/ViewStrategy.js"
+import creatingTemplate from "./strategies/TemplateStrategy.js"
+import recap from "./scripts/configRecap.js"
+import setConfig from "./scripts/setConfig.js"
 import setC from "./scripts/set.js"
 import watch from "./scripts/watch.js"
-import starters from "server/starters/starters.js";
+import starters from "server/starters/starters.js"
 
 export default async function callActions(options) {
   const task = new Listr([
@@ -90,8 +90,9 @@ export default async function callActions(options) {
       task: async () => starters.build(options),
       enabled: () => options.build,
     },
+  ])
 
-  ]);
-
-  await task.run().catch(error => { console.error(error); });
+  await task.run().catch((error) => {
+    console.error(error)
+  })
 }

@@ -1,1 +1,11 @@
-import { EndPointCollection } from "mvpjs"; export default class extends EndPointCollection { constructor() { super("EndPointCollectionName", {}); } /** * @override * @returns {Object.<string,{url:string,requestInit:RequestInit}>} */ endPoints() { return {/*entryPointName: { url: "", requestInit: {} }*/ }; } }
+import { EndPointCollection } from "mvpjs"
+export default class extends EndPointCollection {
+  constructor() {
+    super("EndPointCollectionName", {})
+  } /** * @override * @returns {Object.<string,{url:string,requestInit:RequestInit}>} */
+  endPoints() {
+    return {
+      /*entryPointName: { url: "", requestInit: {} }*/
+    }
+  }
+}

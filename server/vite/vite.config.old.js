@@ -1,73 +1,73 @@
-import { defineConfig } from "vite";
-import { viteHtmlTemplate } from "mvpjs/vite-template";
-import viteAutoLoad from "mvpjs/vite-autoload";
-import { dirname, join, resolve } from "path";
-import { fileURLToPath } from "url";
+import { defineConfig } from "vite"
+import { viteHtmlTemplate } from "mvpjs/vite-template"
+import viteAutoLoad from "mvpjs/vite-autoload"
+import { dirname, join, resolve } from "path"
+import { fileURLToPath } from "url"
 
 const { default: mvpConfig } = (await import(
-	process.cwd() + "/mvp.config.js"
-)) || { default: {} };
+  process.cwd() + "/mvp.config.js"
+)) || { default: {} }
 
 ////console.log("---llamando el config");
 
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
-	base: process.env.BASE || join("/", process.env.outDir || "dist"),
-	root: process.cwd(),
-	appType: "custom",
+  base: process.env.BASE || join("/", process.env.outDir || "dist"),
+  root: process.cwd(),
+  appType: "custom",
 
-	server: {
-		middlewareMode: true,
-		fs: {
-			allow: [
-				resolve(process.cwd()),
-				resolve(process.cwd(), "src"),
-				resolve(process.cwd(), "frontend"),
-				resolve(process.cwd(), "node_modules", ".mvpjs"),
-			],
-		},
-	},
-	optimizeDeps: {
-		force: true,
-	},
-	build: {
-		target: "esnext",
-		outDir: join(
-			"./",
-			process.env.publicDir || "statics",
-			process.env.outDir || "dist",
-		),
-		modulePreload: true,
-		emptyOutDir: true,
-		manifest: true,
+  server: {
+    middlewareMode: true,
+    fs: {
+      allow: [
+        resolve(process.cwd()),
+        resolve(process.cwd(), "src"),
+        resolve(process.cwd(), "frontend"),
+        resolve(process.cwd(), "node_modules", ".mvpjs"),
+      ],
+    },
+  },
+  optimizeDeps: {
+    force: true,
+  },
+  build: {
+    target: "esnext",
+    outDir: join(
+      "./",
+      process.env.publicDir || "statics",
+      process.env.outDir || "dist",
+    ),
+    modulePreload: true,
+    emptyOutDir: true,
+    manifest: true,
 
-		rollupOptions: {
-			input: {
-				index: "./index.html",
-				...mvpConfig.input,
-			},
+    rollupOptions: {
+      input: {
+        index: "./index.html",
+        ...mvpConfig.input,
+      },
 
-			output: {
-				assetFileNames: "[name].[ext]",
-				chunkFileNames: "[name].js",
-				entryFileNames: "[name].js",
-			},
-		},
-	},
+      output: {
+        assetFileNames: "[name].[ext]",
+        chunkFileNames: "[name].js",
+        entryFileNames: "[name].js",
+      },
+    },
+  },
 
-	plugins: [viteAutoLoad(), viteHtmlTemplate()],
+  plugins: [viteAutoLoad(), viteHtmlTemplate()],
 
-	resolve: {
-		alias: [
-			{ find: "@app", replacement: resolve(process.cwd(), "frontend", "app") },
-			{
-				find: "@client",
-				replacement: resolve(process.cwd(), "frontend", "client"),
-			},
-			{
-				find: "lib",
-				replacement: resolve(dirname(fileURLToPath(import.meta.url)), "../lib"),
-			},
-		],
-	},
-});
+  resolve: {
+    alias: [
+      { find: "@app", replacement: resolve(process.cwd(), "frontend", "app") },
+      {
+        find: "@client",
+        replacement: resolve(process.cwd(), "frontend", "client"),
+      },
+      {
+        find: "lib",
+        replacement: resolve(dirname(fileURLToPath(import.meta.url)), "../lib"),
+      },
+    ],
+  },
+})

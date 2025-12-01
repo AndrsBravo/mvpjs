@@ -1,5 +1,5 @@
-import { Layout } from "mvpjs";
-import DefaultLayoutView from "./views/DefaultLayoutView";
+import { Layout } from "mvpjs"
+import DefaultLayoutView from "./views/DefaultLayoutView"
 /**
  * @layout
  */
@@ -7,9 +7,9 @@ export default class extends Layout {
   constructor() {
     super({
       name: "DefaultLayout",
-      view: new DefaultLayoutView()
-    });
+      view: new DefaultLayoutView(),
+    })
   }
 
-  start() { }
+  start() {}
 }

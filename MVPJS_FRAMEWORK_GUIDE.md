@@ -1,4 +1,4 @@
-# mvpjs Framework Guide
+# mvpjs Framework Guide - Complete Reference
 
 Complete reference for mvpjs framework concepts and patterns.
 
@@ -14,6 +14,10 @@ Complete reference for mvpjs framework concepts and patterns.
 8. [Lifecycle](#lifecycle)
 9. [Data Binding](#data-binding)
 10. [Decorators](#decorators)
+11. [HTTP Petitions (EndPointCollection)](#http-petitions-endpointcollection)
+12. [Client Router System](#client-router-system)
+13. [Best Practices](#best-practices)
+14. [Summary Table](#summary-table)
 
 ---
 
@@ -453,22 +457,386 @@ export default class MyPage extends Page { }
 
 ### `@route`
 
-Marks a method as an API route handler (backend).
+Marks a function as an API route handler (backend). The HTTP method is determined by the function name.
 
+**Syntax**: `@route(path)`
+
+- `path` (required): Route path (e.g., `/api/users`, `/api/clients/:id`)
+- HTTP method is determined by function name: `get`, `post`, `put`, `delete`, `patch`, `head`, `options`
+- `export default` = GET request
+- `export const get` = GET request
+- `export const post` = POST request
+
+**Examples**:
 ```javascript
-/** @route(POST, /api/endpoint) */
-async handleCreate(req, res) { }
+// GET request
+/** @route(/api/users) */
+export const get = async (req, res) => {
+  // GET /api/users
+}
+
+// POST request
+/** @route(/api/users) */
+export const post = async (req, res) => {
+  // POST /api/users
+}
+
+// PUT request
+/** @route(/api/users/:id) */
+export const put = async (req, res) => {
+  // PUT /api/users/:id
+}
+
+// DELETE request
+/** @route(/api/users/:id) */
+export const delete = async (req, res) => {
+  // DELETE /api/users/:id
+}
+
+// GET by default
+/** @route(/api/users) */
+export default async function(req, res) {
+  // GET /api/users
+}
 ```
 
 ### `@middleware`
 
-Applies middleware to a route.
+Applies middleware to a route. Middleware is placed in an array before the handler function.
 
 ```javascript
-/** @route(POST, /api/endpoint) */
-/** @middleware(validateAuth) */
-async handleCreate(req, res) { }
+// Single middleware
+/** @route(/api/users) */
+export const post = [
+  validateAuthMiddleware,
+  async (req, res) => {
+    // Handler with middleware
+  }
+]
+
+// Multiple middleware
+/** @route(/api/users) */
+export const post = [
+  validateAuthMiddleware,
+  validateDataMiddleware,
+  checkPermissionsMiddleware,
+  async (req, res) => {
+    // Handler with multiple middleware
+  }
+]
 ```
+
+---
+
+## HTTP Petitions (EndPointCollection)
+
+### What is EndPointCollection?
+
+`EndPointCollection` is a class that manages all HTTP endpoints for your application. It provides:
+- Centralized API endpoint management
+- Built-in request configuration with `requestInitBuilder()`
+- Automatic caching and storage strategies
+- Type-safe endpoint definitions
+
+### EndPointCollection Structure
+
+```javascript
+import { EndPointCollection, requestInitBuilder } from "mvpjs/end-point-data-source";
+
+export default class MyEndPoints extends EndPointCollection {
+  constructor() {
+    super({
+      name: "MyEndPoints",
+      baseURL: "/v1/api",
+      endPoints: {
+        // Define your endpoints here
+        getUsers: {
+          url: "/users",
+          requestInit: requestInitBuilder()
+            .method.GET
+            .headers.ContentType.application_json
+            .build,
+          cache: {
+            enabled: true,
+            type: "localStorage",
+            ttl: 3600000
+          }
+        }
+      }
+    });
+  }
+}
+```
+
+### RequestInitBuilder - Building HTTP Requests
+
+`requestInitBuilder()` is a fluent interface for constructing HTTP requests safely and intuitively.
+
+#### HTTP Methods
+
+```javascript
+requestInitBuilder().method.GET.build
+requestInitBuilder().method.POST.build
+requestInitBuilder().method.PUT.build
+requestInitBuilder().method.DELETE.build
+requestInitBuilder().method.PATCH.build
+requestInitBuilder().method.HEAD.build
+```
+
+#### Content-Type Headers
+
+```javascript
+requestInitBuilder()
+  .headers.ContentType.application_json
+  .build
+
+requestInitBuilder()
+  .headers.ContentType.text_html
+  .build
+
+requestInitBuilder()
+  .headers.ContentType.multipart_form_data
+  .build
+```
+
+#### Cache Control
+
+```javascript
+requestInitBuilder()
+  .cache.no_store          // Don't cache
+  .build
+
+requestInitBuilder()
+  .cache.force_cache       // Always use cache
+  .build
+
+requestInitBuilder()
+  .cache.no_cache          // Validate before using cache
+  .build
+```
+
+#### Credentials & Security
+
+```javascript
+requestInitBuilder()
+  .credentials.include     // Include cookies/auth
+  .build
+
+requestInitBuilder()
+  .credentials.same_origin // Same-origin only
+  .build
+```
+
+#### Other Options
+
+```javascript
+requestInitBuilder()
+  .mode.cors               // CORS mode
+  .keepalive.true          // Keep connection alive
+  .redirect.manual         // Manual redirect handling
+  .build
+```
+
+### Storage/Caching Strategy
+
+Each endpoint can define where to store retrieved data:
+
+**Storage Types:**
+- **memory** - RAM (cleared on page refresh)
+- **sessionStorage** - Available during active session
+- **localStorage** - Persistent across sessions
+- **indexedDB** - Complex browser database
+
+**Configuration:**
+
+```javascript
+cache: {
+  enabled: true,          // Enable caching
+  type: "localStorage",   // Storage type
+  ttl: 3600000            // Time to live (1 hour)
+}
+```
+
+### Complete Example - ClientsEndPoints
+
+```javascript
+import { EndPointCollection, requestInitBuilder } from "mvpjs/end-point-data-source";
+
+export default class ClientsEndPoints extends EndPointCollection {
+  constructor() {
+    super({
+      name: "ClientsEndPoints",
+      baseURL: "/v1/clients",
+      endPoints: {
+        // Read - cached in localStorage
+        ListClients: {
+          url: "/",
+          requestInit: requestInitBuilder()
+            .method.GET
+            .headers.ContentType.application_json
+            .cache.force_cache
+            .build,
+          cache: {
+            enabled: true,
+            type: "localStorage",
+            ttl: 1800000  // 30 minutes
+          }
+        },
+        
+        // Create - no cache
+        CreateClient: {
+          url: "/",
+          requestInit: requestInitBuilder()
+            .method.POST
+            .headers.ContentType.application_json
+            .cache.no_store
+            .credentials.include
+            .build,
+          cache: { enabled: false }
+        },
+        
+        // Update - no cache
+        UpdateClient: {
+          url: "/{@client_id}",
+          requestInit: requestInitBuilder()
+            .method.PUT
+            .headers.ContentType.application_json
+            .cache.no_store
+            .build,
+          cache: { enabled: false }
+        },
+        
+        // Filter - sessionStorage
+        FilterClients: {
+          url: "/filter",
+          requestInit: requestInitBuilder()
+            .method.POST
+            .headers.ContentType.application_json
+            .keepalive.true
+            .build,
+          cache: {
+            enabled: true,
+            type: "sessionStorage"
+          }
+        }
+      }
+    });
+  }
+}
+```
+
+### RequestInitBuilder - Future Enhancements
+
+Features planned for upcoming versions:
+- ✅ Advanced authorization headers (Bearer, Basic Auth, API Keys)
+- ✅ Custom headers
+- ✅ Body builders (JSON, FormData, XML)
+- ✅ Timeout configuration
+- ✅ Automatic retry logic
+- ✅ Request/Response interceptors
+- ✅ Request validation
+- ✅ Advanced error handling
+- ✅ Rate limiting
+
+---
+
+## Client Router System
+
+### Overview
+
+MVPJS features an **automatic client-side router** that detects and loads routes based on `@page` decorators in Page classes. A custom Vite plugin manages this process, creating a hierarchical routes structure.
+
+### How It Works
+
+#### 1. Plugin Detection (vite-template.js)
+
+The custom Vite plugin:
+- Scans all Page files with `@page` decorators
+- Detects `.html` template imports
+- Creates automatic route hierarchy
+- Transforms templates for optimal rendering
+
+#### 2. Auto-Generated Routes Structure
+
+Routes are stored in a JavaScript object (generated automatically):
+
+```javascript
+// Location: client/_modules/routes.js (auto-generated)
+
+{
+  "/users": {
+    "page": () => import('...UsersPage'),
+    "layout": () => import('...UsersLayout'),
+    ":id": {
+      "page": () => import('...UserDetailPage'),
+      "layout": () => import('...UserDetailLayout')
+    }
+  },
+  "/settings": {
+    "page": () => import('...SettingsPage'),
+    "layout": () => import('...SettingsLayout')
+  }
+}
+```
+
+### Navigation Flow - From Click to DOM
+
+```
+1. USER CLICKS LINK
+   ↓
+2. RouteService.callCreateRoute(location)
+   ↓
+3. Get route path from location
+   ↓
+4. CHECK IF LAYOUT CACHED
+   ├─ If not cached:
+   │  ├─ Load Layout from routes object
+   │  ├─ Import and instantiate Layout
+   │  ├─ Render Layout
+   │  └─ Call Layout.start()
+   └─ If cached: Use cached instance
+   ↓
+5. CREATE ROUTE INSTANCE
+   ├─ new Route(location, routeObj)
+   ↓
+6. RENDER PAGE
+   ├─ Import Page class
+   ├─ Instantiate Page
+   ├─ Set Page metadata (params, query, etc.)
+   ├─ Set Layout for Page
+   ├─ Call Page[method]() if exists
+   └─ Call Page.start()
+   ↓
+7. REGISTER ROUTE
+   ├─ Store in #routesMap
+   ├─ Add to route history
+   └─ Set as current route
+   ↓
+8. SHOW PAGE
+   ├─ Close previous route (if exists)
+   ├─ Call Page.show()
+   ├─ Render Page sections in DOM
+   └─ Update browser history
+   ↓
+9. RESULT: PAGE VISIBLE IN DOM
+```
+
+### Key Classes
+
+- **RouteService**: Manages all client routes
+- **Route**: Represents a single route
+- **Layout**: Page structure/container
+- **Page**: Page controller
+
+### Features
+
+✅ **Automatic Route Detection**
+✅ **Hierarchical Routes**
+✅ **Layout Caching**
+✅ **Lazy Loading**
+✅ **Browser History**
+✅ **Route Metadata**
+✅ **Cascading Render**
 
 ---
 
@@ -513,6 +881,36 @@ async handleCreate(req, res) { }
 - Mix styling and markup excessively
 - Create deeply nested data-repeat structures
 
+### HTTP Endpoints
+
+✅ **Do:**
+- Define all endpoints in a dedicated EndPointCollection class
+- Use appropriate storage types (no cache for mutations)
+- Centralize API configuration
+- Use consistent naming for endpoints
+- Leverage caching for read operations
+
+❌ **Don't:**
+- Mix endpoint definitions across multiple files
+- Cache POST/PUT/DELETE operations unnecessarily
+- Store sensitive data in localStorage
+- Define endpoints inline in Pages/Views
+
+### Server Routes
+
+✅ **Do:**
+- Use only the route path in `@route()` decorator
+- Determine HTTP method by function name
+- Place middleware in array before handler
+- Use consistent naming: `get`, `post`, `put`, `delete`, `patch`
+- Delegate business logic to services
+
+❌ **Don't:**
+- Include HTTP method in `@route()` decorator
+- Mix middleware and handler logic
+- Create overly complex route handlers
+- Ignore input validation
+
 ---
 
 ## Summary Table
@@ -524,4 +922,10 @@ async handleCreate(req, res) { }
 | **Template** | HTML markup | `.html` file | None |
 | **IDs** | Access elements | In template `id=""` | Via `this.ids` |
 | **Sections** | Render Views | In template `data-section=""` | Via `this.sections` |
+| **EndPointCollection** | HTTP management | `endpoints/` | None |
+| **Route** | API handler | `routes/` | `@route()` |
+| **Middleware** | Request processing | `routes/` | `@middleware()` |
 
+---
+
+**Last Updated**: November 25, 2025

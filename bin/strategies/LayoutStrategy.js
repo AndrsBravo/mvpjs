@@ -1,19 +1,19 @@
-import Listr from "listr";
-import { setDefaults } from "../utils.js";
-import { callingConfigParams } from "../utils.js";
-import { readingTemplateContent } from "../utils.js";
-import { setUpFilePath } from "../utils.js";
-import { fileTesting } from "../utils.js";
-import { createDirAndFileTemplate } from "../utils.js";
-import { updateConfigLayout } from "../utils.js";
-import { writeMvpConfig } from "../utils.js";
+import Listr from "listr"
+import { setDefaults } from "../utils.js"
+import { callingConfigParams } from "../utils.js"
+import { readingTemplateContent } from "../utils.js"
+import { setUpFilePath } from "../utils.js"
+import { fileTesting } from "../utils.js"
+import { createDirAndFileTemplate } from "../utils.js"
+import { updateConfigLayout } from "../utils.js"
+import { writeMvpConfig } from "../utils.js"
 
 export default async function creatingLayout(options) {
-  options.value = options.layout;
-  options.target = "Layout";
-  options.templateDirName = "layout/Layout.js";
-  options.templateName = "LayoutName";
-  options.filePathName = options.target.toLowerCase();
+  options.value = options.layout
+  options.target = "Layout"
+  options.templateDirName = "layout/Layout.js"
+  options.templateName = "LayoutName"
+  options.filePathName = options.target.toLowerCase()
 
   const task = new Listr([
     {
@@ -51,11 +51,11 @@ export default async function creatingLayout(options) {
       task: () => writeMvpConfig(options),
       enabled: () => options.fileExists,
     },
-  ]);
+  ])
 
-  await task.run();
+  await task.run()
 }
 
 export function setLayoutToConfigFile(options) {
-  options.config.layout = options.value;
+  options.config.layout = options.value
 }

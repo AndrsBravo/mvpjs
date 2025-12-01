@@ -1,4 +1,4 @@
-import Listr from "listr";
+import Listr from "listr"
 import {
   setDefaults,
   callingConfigParams,
@@ -10,14 +10,14 @@ import {
   createDirAndFileTemplate,
   updateConfigResource,
   writeMvpConfig,
-} from "../utils.js";
+} from "../utils.js"
 
 export default async function creatingModel(options) {
-  options.value = options.model;
-  options.target = "Model";
-  options.templateDirName = "model/Model.js";
-  options.templateName = "ModelName";
-  options.filePathName = "models";
+  options.value = options.model
+  options.target = "Model"
+  options.templateDirName = "model/Model.js"
+  options.templateName = "ModelName"
+  options.filePathName = "models"
 
   const task = new Listr([
     {
@@ -53,9 +53,8 @@ export default async function creatingModel(options) {
     {
       title: "Creating files",
       task: () => createDirAndFileTemplate(options),
-    }
-  ]);
+    },
+  ])
 
-  await task.run();
+  await task.run()
 }
-

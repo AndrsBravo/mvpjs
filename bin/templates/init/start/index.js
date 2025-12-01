@@ -1,1 +1,1 @@
-import "mvpjs/app";
+import "mvpjs/app"

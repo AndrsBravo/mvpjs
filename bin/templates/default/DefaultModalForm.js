@@ -1,10 +1,7 @@
-
-import { Page } from "../../../lib/mvp/page/Page.js";
+import { Page } from "../../../lib/mvp/page/Page.js"
 
 export class DefaultModalForm extends Page {
-
-    constructor() {
-        super();
-    }
-
+  constructor() {
+    super()
+  }
 }

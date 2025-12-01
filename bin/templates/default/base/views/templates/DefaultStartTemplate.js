@@ -1,5 +1,5 @@
-import {Template} from "../../../../view/Template.js";
-import {html} from "../../../../../builder/HtmlTemplateBuilder.js";
+import { Template } from "../../../../view/Template.js"
+import { html } from "../../../../../builder/HtmlTemplateBuilder.js"
 
 export class DefaultStartTemplate extends Template {
   constructor() {
@@ -7,7 +7,7 @@ export class DefaultStartTemplate extends Template {
       "DefaultStartTemplate",
       html("div")
         .setClass(
-          "flex flex-columns justify-center align-center pt-color h-100"
+          "flex flex-columns justify-center align-center pt-color h-100",
         )
         .setHTML([
           html("h1").setHTML("Welcome"),
@@ -18,7 +18,7 @@ export class DefaultStartTemplate extends Template {
               html("span").setClass("font-bold").setHTML("mvp.js"),
               " Framework",
             ]),
-        ])
-    );
+        ]),
+    )
   }
 }

@@ -3,5 +3,5 @@
  */
 
 export function get(req, res) {
-    res.index.send()
+  res.index.send()
 }
